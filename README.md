@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 24/7 Support Roster Application
 
 A dynamic, containerized shift roster scheduler for managing 24/7 support coverage across multiple time zones (India, Morocco, Panama).
@@ -13,12 +12,37 @@ A dynamic, containerized shift roster scheduler for managing 24/7 support covera
 - **Auto-save** - Status indicator for save operations
 - **Weekend Highlighting** - Easy distinction between weekdays and weekends
 
-## 📋 Project Files
+## 📁 Project Structure
 
-- **V5_roster_dynamic.html** - Latest roster version (production)
-- **V4_roster_dynamic.html** - Previous iteration
-- **V3_roster_dynamic.html** - Earlier version
-- **roster_v2.html** - Initial version
+```
+shift-roster/
+├── V5_roster_dynamic.html    # Current production version
+├── Dockerfile                 # Docker image definition
+├── docker-compose.yml         # Docker Compose configuration
+├── nginx.conf                 # Nginx web server config
+├── README.md                  # This file
+├── LICENSE.txt                # MIT License
+├── CHANGELOG.md               # Version history
+│
+├── scripts/                   # Management & deployment scripts
+│   ├── start.bat              # Start Docker container
+│   ├── stop.bat               # Stop Docker container
+│   ├── open.bat               # Open in browser
+│   ├── logs.bat               # View container logs
+│   ├── rebuild.bat            # Rebuild from scratch
+│   ├── menu.bat               # Interactive menu
+│   ├── git-init.bat           # Initialize git repo
+│   ├── push-github.bat        # Push to GitHub
+│   ├── pull-remote.bat        # Pull from GitHub
+│   ├── sync-github.bat        # Complete sync workflow
+│   └── README.md              # Scripts documentation
+│
+└── archives/                  # Previous versions (for reference)
+    ├── V2_roster.html         # Initial version
+    ├── V3_roster_dynamic.html # First dynamic version
+    ├── V4_roster_dynamic.html # Second iteration
+    └── README.md              # Archives documentation
+```
 
 ## 🐳 Docker Setup
 
@@ -27,7 +51,7 @@ A dynamic, containerized shift roster scheduler for managing 24/7 support covera
 
 ### Quick Start (Windows)
 
-Simply double-click:
+Simply double-click from the `scripts/` folder:
 ```bash
 start.bat          # Start the container
 open.bat           # Start & open in browser
@@ -35,6 +59,11 @@ stop.bat           # Stop the container
 rebuild.bat        # Rebuild from scratch
 logs.bat           # View logs
 menu.bat           # Interactive menu
+```
+
+Or use the interactive menu:
+```bash
+scripts\menu.bat
 ```
 
 ### Or use docker-compose
@@ -47,15 +76,24 @@ docker-compose up --build -d
 http://localhost:8080
 ```
 
-## 📝 Available Scripts
+## 📝 Management Scripts
 
-- **start.bat** - Build and start Docker container
-- **stop.bat** - Stop the running container
-- **logs.bat** - View live container logs
-- **rebuild.bat** - Clean rebuild from scratch
-- **open.bat** - Open app in browser (auto-starts if needed)
-- **menu.bat** - Interactive Docker management menu
-- **quickfix.bat** - Quick fix for common issues
+All scripts are located in the `scripts/` folder. See `scripts/README.md` for detailed documentation.
+
+### Docker Management
+- **`start.bat`** - Build and start Docker container
+- **`stop.bat`** - Stop the running container
+- **`open.bat`** - Open app in browser (auto-starts if needed)
+- **`logs.bat`** - View live container logs
+- **`rebuild.bat`** - Clean rebuild from scratch
+- **`menu.bat`** - Interactive Docker management menu
+- **`quickfix.bat`** - Quick fix for common issues
+
+### Git & GitHub
+- **`git-init.bat`** - Initialize git repository
+- **`push-github.bat`** - Push to trickyj/shiftroster
+- **`pull-remote.bat`** - Pull remote changes
+- **`sync-github.bat`** - Complete sync workflow
 
 ## 🛠️ Technology Stack
 
@@ -92,13 +130,12 @@ Edit `nginx.conf` for advanced web server configuration
 
 **Container won't start:**
 ```bash
-docker logs shift-roster-app
+scripts\logs.bat
 ```
 
 **Rebuild everything:**
 ```bash
-docker-compose down --rmi all
-docker-compose up --build
+scripts\rebuild.bat
 ```
 
 ## 📄 License
@@ -110,7 +147,11 @@ MIT License - Feel free to use and modify
 To make changes:
 1. Edit `.html` files
 2. Changes auto-reflect due to volume mounts
-3. Rebuild with `rebuild.bat` if needed
+3. Rebuild with `scripts\rebuild.bat` if needed
+
+## 📚 Archives
+
+Previous versions of the roster are available in the `archives/` folder for reference and historical tracking.
 
 ## 🐛 Known Issues
 
@@ -128,7 +169,7 @@ None currently reported
 
 For issues or questions, check the logs:
 ```bash
-docker logs shift-roster-app
+scripts\logs.bat
 ```
 
 ---
