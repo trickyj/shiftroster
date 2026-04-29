@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>24/7 Support Roster</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090f;
+  --surface: #0f1118;
+  --card: #13161f;
+  --border: #1c2035;
+  --border2: #252a40;
+  --india: #f97316;
+  --morocco: #10b981;
+  --panama: #a78bfa;
+  --s1: #f97316; --s1-bg: rgba(249,115,22,0.18); --s1-border: rgba(249,115,22,0.3);
+  --s2: #fdba74; --s2-bg: rgba(253,186,116,0.12); --s2-border: rgba(253,186,116,0.2);
+  --s3: #10b981; --s3-bg: rgba(16,185,129,0.16); --s3-border: rgba(16,185,129,0.28);
+  --s4: #6ee7b7; --s4-bg: rgba(110,231,183,0.1); --s4-border: rgba(110,231,183,0.2);
+  --s5: #a78bfa; --s5-bg: rgba(167,139,250,0.15); --s5-border: rgba(167,139,250,0.28);
+  --off-bg: transparent; --off-border: rgba(255,255,255,0.06); --off-color: #2a3050;
+  --text: #dde1f0; --muted: #4a5280; --subtle: #6b7399;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Sora', sans-serif; min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 700px 500px at 5% 20%, rgba(249,115,22,0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 95% 80%, rgba(167,139,250,0.035) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 50% 100%, rgba(16,185,129,0.025) 0%, transparent 70%);
+}
+.page { max-width: 1100px; margin: 0 auto; padding: 36px 20px 80px; }
+
+/* ── HEADER ── */
+header { margin-bottom: 40px; }
+.eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content:''; width:20px; height:1px; background: var(--muted); }
+h1 { font-family: 'Space Mono', monospace; font-size: clamp(26px,4vw,44px);
+  font-weight:700; letter-spacing:-0.03em; line-height:1.05; margin-bottom:18px; }
+h1 em { color: var(--india); font-style:normal; }
+.header-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.meta-pills { display:flex; gap:10px; flex-wrap:wrap; }
+.meta-pill {
+  display:flex; align-items:center; gap:6px;
+  background: var(--card); border:1px solid var(--border);
+  border-radius:999px; padding:5px 13px; font-size:12px; color:var(--subtle);
+}
+.meta-pill span { font-family:'Space Mono',monospace; font-size:11px; color:var(--text); }
+.header-actions { display:flex; gap:10px; flex-wrap:wrap; }
+
+/* ── BUTTONS ── */
+.btn {
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'Space Mono',monospace; font-size:11px; font-weight:700;
+  letter-spacing:0.08em; padding:9px 18px; border-radius:8px;
+  border:none; cursor:pointer; transition:all 0.18s; white-space:nowrap;
+}
+.btn-primary { background: var(--india); color:#fff; }
+.btn-primary:hover { background:#ea580c; transform:translateY(-1px); }
+.btn-ghost { background: var(--card); color:var(--text); border:1px solid var(--border2); }
+.btn-ghost:hover { border-color: var(--muted); }
+.btn-sm { padding:6px 12px; font-size:10px; }
+.btn-danger { background: rgba(239,68,68,0.12); color:#f87171; border:1px solid rgba(239,68,68,0.2); }
+.btn-danger:hover { background: rgba(239,68,68,0.2); }
+
+/* ── WEEK TABS ── */
+.weeks-nav {
+  display:flex; align-items:center; gap:0;
+  border-bottom:1px solid var(--border); margin-bottom:28px;
+  overflow-x: auto; padding-bottom:0;
+}
+.week-tab {
+  font-family:'Space Mono',monospace; font-size:11px; font-weight:700;
+  padding:10px 22px; border:none; background:transparent;
+  color:var(--muted); cursor:pointer; border-bottom:2px solid transparent;
+  transition:all 0.18s; white-space:nowrap; position:relative;
+  letter-spacing:0.08em;
+}
+.week-tab:hover { color:var(--text); }
+.week-tab.active { color:var(--india); border-bottom-color:var(--india); }
+.week-tab .del-week {
+  display:none; position:absolute; top:4px; right:4px;
+  width:14px; height:14px; border-radius:50%; background:rgba(239,68,68,0.8);
+  font-size:10px; line-height:14px; text-align:center; color:#fff; cursor:pointer;
+}
+.week-tab:hover .del-week { display:block; }
+.add-week-btn {
+  font-family:'Space Mono',monospace; font-size:18px; font-weight:700;
+  padding:6px 18px; border:none; background:transparent;
+  color:var(--muted); cursor:pointer; transition:all 0.18s;
+}
+.add-week-btn:hover { color:var(--india); }
+
+/* ── LEGEND / SHIFT PICKER ── */
+.legend-bar {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-bottom:20px; background: var(--card);
+  border:1px solid var(--border); border-radius:10px; padding:12px 16px;
+}
+.legend-label { font-family:'Space Mono',monospace; font-size:9px;
+  letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);
+  margin-right:4px; white-space:nowrap; }
+.shift-chip {
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:5px 12px; border-radius:6px; font-family:'Space Mono',monospace;
+  font-size:11px; font-weight:700; cursor:pointer; border:1px solid transparent;
+  transition:all 0.15s; user-select:none;
+}
+.shift-chip:hover { transform:scale(1.05); }
+.chip-s1 { background:var(--s1-bg); color:var(--s1); border-color:var(--s1-border); }
+.chip-s2 { background:var(--s2-bg); color:var(--s2); border-color:var(--s2-border); }
+.chip-s3 { background:var(--s3-bg); color:var(--s3); border-color:var(--s3-border); }
+.chip-s4 { background:var(--s4-bg); color:var(--s4); border-color:var(--s4-border); }
+.chip-s5 { background:var(--s5-bg); color:var(--s5); border-color:var(--s5-border); }
+.chip-off { background:var(--off-bg); color:var(--off-color); border:1px dashed rgba(255,255,255,0.07); }
+.legend-sep { width:1px; height:20px; background:var(--border); margin:0 4px; }
+.legend-hint { font-size:11px; color:var(--muted); margin-left:auto; }
+
+/* ── ROSTER GRID ── */
+.roster-wrap { position:relative; }
+.roster-grid {
+  background: var(--card); border:1px solid var(--border);
+  border-radius:14px; overflow:hidden; overflow-x:auto;
+}
+.grid-inner { min-width: 700px; }
+
+.grid-header {
+  display:grid; grid-template-columns: 180px repeat(7,1fr);
+  background:#0b0d16; border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:10;
+}
+.gh-cell {
+  padding:11px 8px; font-family:'Space Mono',monospace; font-size:9px;
+  letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);
+  text-align:center; border-right:1px solid var(--border);
+}
+.gh-cell:first-child { text-align:left; padding-left:18px; }
+.gh-cell:last-child { border-right:none; }
+.gh-cell.weekend { color:var(--india); opacity:0.7; }
+
+/* group row */
+.group-row {
+  display:grid; grid-template-columns:180px repeat(7,1fr);
+  background:#0b0d15; border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+}
+.group-label {
+  grid-column:1 / -1; padding:6px 18px;
+  font-family:'Space Mono',monospace; font-size:9px;
+  letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted); display:flex; align-items:center; gap:8px;
+}
+.g-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+
+/* person row */
+.person-row {
+  display:grid; grid-template-columns:180px repeat(7,1fr);
+  border-bottom:1px solid var(--border); transition:background 0.12s;
+}
+.person-row:last-child { border-bottom:none; }
+.person-row:hover { background:rgba(255,255,255,0.012); }
+
+.person-info {
+  padding:12px 18px; display:flex; flex-direction:column;
+  justify-content:center; border-right:1px solid var(--border);
+  border-left:3px solid transparent; position:relative;
+}
+.person-name {
+  font-size:13px; font-weight:600; margin-bottom:2px;
+  display:flex; align-items:center; gap:6px;
+}
+.person-name input {
+  background:transparent; border:none; outline:none;
+  color:var(--text); font-family:'Sora',sans-serif;
+  font-size:13px; font-weight:600; width:100%; cursor:text;
+}
+.person-name input:focus { background:rgba(255,255,255,0.04); border-radius:4px; padding:0 4px; }
+.person-sub { font-family:'Space Mono',monospace; font-size:9px; color:var(--muted); }
+.del-person-btn {
+  position:absolute; right:8px; top:50%; transform:translateY(-50%);
+  width:20px; height:20px; border-radius:4px; border:none;
+  background:rgba(239,68,68,0.0); color:transparent; cursor:pointer;
+  font-size:12px; transition:all 0.15s; display:flex; align-items:center; justify-content:center;
+}
+.person-row:hover .del-person-btn {
+  background:rgba(239,68,68,0.15); color:#f87171;
+}
+
+/* day cell */
+.day-cell {
+  border-right:1px solid var(--border); display:flex;
+  align-items:center; justify-content:center;
+  padding:8px 5px; position:relative;
+}
+.day-cell:last-child { border-right:none; }
+.day-cell.is-weekend { background:rgba(255,255,255,0.02); }
+
+.cell-chip {
+  width:100%; padding:6px 3px; border-radius:6px;
+  font-family:'Space Mono',monospace; font-size:11px; font-weight:700;
+  text-align:center; cursor:pointer; border:1px solid transparent;
+  transition:all 0.13s; user-select:none; position:relative;
+}
+.cell-chip:hover { transform:scale(1.06); filter:brightness(1.15); }
+.cell-chip:active { transform:scale(0.97); }
+.cell-chip.dragging { opacity:0.4; }
+.cell-chip.drag-over { outline:2px solid var(--india); outline-offset:2px; }
+
+/* add member row */
+.add-member-row {
+  display:grid; grid-template-columns:180px repeat(7,1fr);
+  border-top:1px solid var(--border); background:rgba(255,255,255,0.008);
+}
+.add-member-cell {
+  grid-column:1 / -1; padding:10px 18px; display:flex; align-items:center; gap:10px;
+}
+.add-member-btn {
+  font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+  letter-spacing:0.1em; padding:6px 14px; border-radius:6px;
+  border:1px dashed var(--border2); background:transparent;
+  color:var(--muted); cursor:pointer; transition:all 0.15s;
+}
+.add-member-btn:hover { border-color:var(--india); color:var(--india); }
+
+/* ── SECTION HEAD ── */
+.section-head {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:16px; margin-top:40px;
+}
+.section-head h2 {
+  font-family:'Space Mono',monospace; font-size:10px;
+  letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); font-weight:400;
+}
+.section-head::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── SHIFT PICKER POPUP ── */
+.picker-popup {
+  position:fixed; z-index:1000;
+  background:#1a1e2e; border:1px solid var(--border2);
+  border-radius:10px; padding:8px;
+  display:flex; flex-direction:column; gap:4px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  animation: popIn 0.12s ease;
+  min-width:110px;
+}
+@keyframes popIn { from { opacity:0; transform:scale(0.9) translateY(-4px); } to { opacity:1; transform:scale(1); } }
+.picker-option {
+  padding:7px 12px; border-radius:6px; cursor:pointer;
+  font-family:'Space Mono',monospace; font-size:11px; font-weight:700;
+  transition:background 0.1s; text-align:center; border:1px solid transparent;
+}
+.picker-option:hover { filter:brightness(1.2); }
+
+/* ── SAVE INDICATOR ── */
+.save-dot {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'Space Mono',monospace; font-size:10px;
+  color:var(--muted); letter-spacing:0.1em;
+}
+.save-dot::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:#10b981; animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.save-dot.saving::before { background:#f97316; animation:none; }
+.save-dot.saved::before { background:#10b981; animation:none; }
+
+/* ── ADD WEEK MODAL ── */
+.modal-backdrop {
+  position:fixed; inset:0; background:rgba(0,0,0,0.7);
+  z-index:2000; display:flex; align-items:center; justify-content:center;
+}
+.modal {
+  background:#13161f; border:1px solid var(--border2);
+  border-radius:14px; padding:28px; width:320px;
+  animation:popIn 0.15s ease;
+}
+.modal h3 { font-family:'Space Mono',monospace; font-size:14px; margin-bottom:18px; }
+.modal-field { margin-bottom:14px; }
+.modal-field label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; }
+.modal-field input, .modal-field select {
+  width:100%; background:#0f1118; border:1px solid var(--border2);
+  border-radius:8px; padding:9px 12px; color:var(--text);
+  font-family:'Sora',sans-serif; font-size:13px; outline:none;
+  transition:border 0.15s;
+}
+.modal-field input:focus, .modal-field select:focus { border-color:var(--india); }
+.modal-field select option { background:#13161f; }
+.modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:flex-end; }
+
+/* scrollbar */
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ── COVERAGE TIMELINE ── */
+.coverage-panel {
+  margin-top: 40px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.coverage-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #0b0d16;
+}
+.coverage-title {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+}
+.coverage-tabs {
+  display: flex; gap: 4px;
+}
+.cov-tab {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  padding: 5px 14px; border-radius: 6px; border: 1px solid var(--border2);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.cov-tab.active { background: rgba(249,115,22,0.15); color: var(--india); border-color: var(--india); }
+
+.coverage-body { padding: 20px 22px 22px; }
+
+.tl-row { margin-bottom: 18px; }
+.tl-row:last-child { margin-bottom: 0; }
+.tl-row-label {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.tl-gap-badge {
+  font-size: 9px; padding: 2px 8px; border-radius: 4px;
+  background: rgba(239,68,68,0.15); color: #f87171;
+  border: 1px solid rgba(239,68,68,0.25); letter-spacing: 0.05em;
+}
+.tl-ok-badge {
+  font-size: 9px; padding: 2px 8px; border-radius: 4px;
+  background: rgba(16,185,129,0.12); color: #34d399;
+  border: 1px solid rgba(16,185,129,0.25); letter-spacing: 0.05em;
+}
+
+.tl-track {
+  position: relative; height: 40px; border-radius: 8px;
+  background: #0b0d16; border: 1px solid var(--border);
+  overflow: hidden;
+}
+/* hour grid lines */
+.tl-track::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent calc(100%/24 - 1px),
+    rgba(255,255,255,0.03) calc(100%/24 - 1px),
+    rgba(255,255,255,0.03) calc(100%/24)
+  );
+  pointer-events: none; z-index: 2;
+}
+.tl-bar {
+  position: absolute; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  color: rgba(255,255,255,0.9); overflow: hidden; white-space: nowrap;
+  transition: filter 0.2s;
+  z-index: 1;
+}
+.tl-bar:hover { filter: brightness(1.2); z-index: 3; }
+.tl-bar span { pointer-events: none; padding: 0 4px; overflow: hidden; text-overflow: ellipsis; }
+
+/* gap highlight */
+.tl-gap {
+  position: absolute; height: 100%;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(239,68,68,0.15),
+    rgba(239,68,68,0.15) 4px,
+    transparent 4px,
+    transparent 10px
+  );
+  border: 1px solid rgba(239,68,68,0.3);
+  z-index: 1;
+}
+
+.tl-scale {
+  display: flex; justify-content: space-between;
+  margin-top: 6px; padding: 0 2px;
+}
+.tl-scale span {
+  font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted);
+}
+
+.tl-legend {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+  padding-top: 14px; border-top: 1px solid var(--border);
+}
+.tl-legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--subtle);
+}
+.tl-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── EXPORT BAR ── */
+.export-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 28px; padding: 16px 20px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.export-label {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  flex: 1;
+}
+.btn-export {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; padding: 9px 18px; border-radius: 8px;
+  border: 1px solid var(--border2); cursor: pointer; transition: all 0.18s;
+  background: var(--card); color: var(--text);
+}
+.btn-export:hover { border-color: var(--morocco); color: var(--morocco); transform: translateY(-1px); }
+.btn-export svg { flex-shrink: 0; }
+.btn-import {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; padding: 9px 18px; border-radius: 8px;
+  border: 1px solid var(--border2); cursor: pointer; transition: all 0.18s;
+  background: var(--card); color: var(--muted);
+}
+.btn-import:hover { border-color: var(--panama); color: var(--panama); transform: translateY(-1px); }
+#import-file-input { display: none; }
+
+footer { margin-top: 40px; text-align:center; font-family:'Space Mono',monospace;
+  font-size:10px; color:var(--muted); letter-spacing:0.1em;
+  padding-top:18px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Global Support Operations · Live Roster</div>
+    <h1>24/7 <em>Support</em> Roster</h1>
+    <div class="header-row">
+      <div class="meta-pills">
+        <div class="meta-pill">🇮🇳 India <span id="cnt-india">4</span></div>
+        <div class="meta-pill">🇲🇦 Morocco <span id="cnt-morocco">4</span></div>
+        <div class="meta-pill">🇵🇦 Panama <span id="cnt-panama">1</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="save-dot" id="save-dot">AUTO-SAVED</div>
+        <div class="header-actions">
+          <button class="btn btn-ghost btn-sm" onclick="resetRoster()">↺ Reset</button>
+          <button class="btn btn-primary" onclick="openAddWeekModal()">+ Add Week</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- WEEK TABS -->
+  <div class="weeks-nav" id="weeks-nav"></div>
+
+  <!-- LEGEND -->
+  <div class="legend-bar">
+    <span class="legend-label">Shift:</span>
+    <span class="shift-chip chip-s1">S1</span>
+    <span class="shift-chip chip-s2">S2</span>
+    <span class="shift-chip chip-s3">S3</span>
+    <span class="shift-chip chip-s4">S4</span>
+    <span class="shift-chip chip-s5">S5</span>
+    <span class="shift-chip chip-off">OFF</span>
+    <div class="legend-sep"></div>
+    <span class="legend-hint">Click any cell to change shift</span>
+  </div>
+
+  <!-- ROSTER -->
+  <div class="roster-wrap">
+    <div class="roster-grid">
+      <div class="grid-inner" id="roster-body"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- COVERAGE TIMELINE -->
+<div class="coverage-panel" id="coverage-panel">
+  <div class="coverage-header">
+    <span class="coverage-title">24h UTC Coverage · <span id="cov-week-label">Week A</span></span>
+    <div class="coverage-tabs">
+      <button class="cov-tab active" id="cov-tab-wkday" onclick="setCovTab('weekday',this)">WEEKDAYS</button>
+      <button class="cov-tab" id="cov-tab-wkend" onclick="setCovTab('weekend',this)">WEEKENDS</button>
+    </div>
+  </div>
+  <div class="coverage-body" id="coverage-body"></div>
+</div>
+
+<!-- EXPORT / IMPORT BAR -->
+<div class="export-bar">
+  <span class="export-label">💾 Backup &amp; Restore</span>
+  <button class="btn-export" onclick="exportJSON()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>Export JSON
+  </button>
+  <label class="btn-import" for="import-file-input">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+    </svg>Import JSON
+  </label>
+  <input type="file" id="import-file-input" accept=".json" onchange="importJSON(event)" />
+</div>
+
+<!-- PICKER POPUP -->
+<div class="picker-popup" id="picker" style="display:none"></div>
+
+<!-- ADD WEEK MODAL -->
+<div class="modal-backdrop" id="modal" style="display:none" onclick="e=>e.target===this&&closeModal()">
+  <div class="modal">
+    <h3>Add New Week</h3>
+    <div class="modal-field">
+      <label>Week Label</label>
+      <input type="text" id="modal-week-label" placeholder="e.g. Week C or Week 3" />
+    </div>
+    <div class="modal-field">
+      <label>Copy schedule from</label>
+      <select id="modal-copy-from">
+        <option value="">Blank (all OFF)</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddWeek()">Add Week</button>
+    </div>
+  </div>
+</div>
+
+<footer>India IST (UTC+5:30) · Morocco WET (UTC+1) · Panama EST (UTC−5) · All changes auto-saved locally</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA MODEL
+// ─────────────────────────────────────────────
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const SHIFTS = ['S1','S2','S3','S4','S5','OFF'];
+const SHIFT_STYLES = {
+  S1:  { bg:'var(--s1-bg)',  color:'var(--s1)',  border:'var(--s1-border)' },
+  S2:  { bg:'var(--s2-bg)',  color:'var(--s2)',  border:'var(--s2-border)' },
+  S3:  { bg:'var(--s3-bg)',  color:'var(--s3)',  border:'var(--s3-border)' },
+  S4:  { bg:'var(--s4-bg)',  color:'var(--s4)',  border:'var(--s4-border)' },
+  S5:  { bg:'var(--s5-bg)',  color:'var(--s5)',  border:'var(--s5-border)' },
+  OFF: { bg:'transparent',   color:'#2a3050',    border:'rgba(255,255,255,0.06)' },
+};
+const TEAM_COLORS = { India:'var(--india)', Morocco:'var(--morocco)', Panama:'var(--panama)' };
+
+const DEFAULT_MEMBERS = [
+  { id:'p1', name:'India — P1',   team:'India',   defaultShift:'S1' },
+  { id:'p2', name:'India — P2',   team:'India',   defaultShift:'S1' },
+  { id:'p3', name:'India — P3',   team:'India',   defaultShift:'S2' },
+  { id:'p4', name:'India — P4',   team:'India',   defaultShift:'S2' },
+  { id:'m1', name:'Morocco — M1', team:'Morocco', defaultShift:'S3' },
+  { id:'m2', name:'Morocco — M2', team:'Morocco', defaultShift:'S3' },
+  { id:'m3', name:'Morocco — M3', team:'Morocco', defaultShift:'S4' },
+  { id:'m4', name:'Morocco — M4', team:'Morocco', defaultShift:'S4' },
+  { id:'pa1',name:'Panama — PA1', team:'Panama',  defaultShift:'S5' },
+];
+
+// Week A default
+function makeWeekSchedule(members, weekLabel) {
+  const isA = weekLabel.toUpperCase().includes('A') || weekLabel.includes('1');
+  const schedule = {};
+  members.forEach(m => {
+    const wkdShift = m.defaultShift;
+    schedule[m.id] = {};
+    // weekend rotators: p1,m1,m3 on week A; p2,m2,m4 on week B
+    const weekendA = ['p1','m1','m3'];
+    const weekendB = ['p2','m2','m4'];
+    const noWeekend = ['p3','p4','pa1'];
+    DAYS.forEach((day, di) => {
+      const isWknd = di >= 5;
+      if (noWeekend.includes(m.id)) {
+        schedule[m.id][day] = isWknd ? 'OFF' : wkdShift;
+      } else if (weekendA.includes(m.id)) {
+        if (isA) { schedule[m.id][day] = (di===0||di===1) ? 'OFF' : wkdShift; }
+        else      { schedule[m.id][day] = isWknd ? 'OFF' : wkdShift; }
+      } else if (weekendB.includes(m.id)) {
+        if (!isA) { schedule[m.id][day] = (di===0||di===1) ? 'OFF' : wkdShift; }
+        else       { schedule[m.id][day] = isWknd ? 'OFF' : wkdShift; }
+      } else {
+        schedule[m.id][day] = isWknd ? 'OFF' : wkdShift;
+      }
+    });
+  });
+  return schedule;
+}
+
+function makeBlankSchedule(members) {
+  const s = {};
+  members.forEach(m => {
+    s[m.id] = {};
+    DAYS.forEach(d => s[m.id][d] = 'OFF');
+  });
+  return s;
+}
+
+function defaultState() {
+  const members = JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+  return {
+    members,
+    weeks: [
+      { id:'wk-a', label:'Week A', schedule: makeWeekSchedule(members, 'A') },
+      { id:'wk-b', label:'Week B', schedule: makeWeekSchedule(members, 'B') },
+    ],
+    activeWeek: 'wk-a',
+  };
+}
+
+// ─────────────────────────────────────────────
+// STATE + PERSISTENCE
+// ─────────────────────────────────────────────
+const STORAGE_KEY = 'roster_v3';
+let state;
+let saveTimer;
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state = JSON.parse(raw);
+    else state = defaultState();
+  } catch { state = defaultState(); }
+}
+
+function saveState() {
+  const dot = document.getElementById('save-dot');
+  dot.textContent = 'SAVING…'; dot.className = 'save-dot saving';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+    dot.textContent = 'SAVED ✓'; dot.className = 'save-dot saved';
+    setTimeout(() => { dot.textContent = 'AUTO-SAVED'; dot.className = 'save-dot'; }, 1500);
+  }, 300);
+}
+
+function resetRoster() {
+  if (!confirm('Reset all weeks and schedules to default?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = defaultState();
+  render();
+  saveState();
+}
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+function render() {
+  renderTabs();
+  renderGrid();
+  updateCounters();
+}
+
+function renderTabs() {
+  const nav = document.getElementById('weeks-nav');
+  nav.innerHTML = '';
+  state.weeks.forEach(wk => {
+    const tab = document.createElement('button');
+    tab.className = 'week-tab' + (wk.id === state.activeWeek ? ' active' : '');
+    tab.dataset.id = wk.id;
+    tab.innerHTML = `<span class="week-tab-label">${wk.label}</span><span class="del-week" title="Delete week" onclick="deleteWeek('${wk.id}',event)">×</span>`;
+    tab.addEventListener('click', (e) => {
+      if (e.target.classList.contains('del-week')) return;
+      state.activeWeek = wk.id;
+      render();
+      renderCoverage();
+    });
+    nav.appendChild(tab);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-week-btn';
+  addBtn.textContent = '+';
+  addBtn.title = 'Add week';
+  addBtn.onclick = openAddWeekModal;
+  nav.appendChild(addBtn);
+}
+
+function renderGrid() {
+  const body = document.getElementById('roster-body');
+  const week = state.weeks.find(w => w.id === state.activeWeek);
+  if (!week) { body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted)">No week selected.</div>'; return; }
+
+  let html = `
+    <div class="grid-header">
+      <div class="gh-cell">Member</div>
+      ${DAYS.map((d,i)=>`<div class="gh-cell${i>=5?' weekend':''}">${d}</div>`).join('')}
+    </div>
+  `;
+
+  const teams = ['India','Morocco','Panama'];
+  teams.forEach(team => {
+    const members = state.members.filter(m => m.team === team);
+    if (!members.length) return;
+    const col = TEAM_COLORS[team];
+    html += `
+      <div class="group-row">
+        <div class="group-label">
+          <span class="g-dot" style="background:${col}"></span>
+          ${team} Team
+        </div>
+      </div>
+    `;
+    members.forEach(m => {
+      html += `<div class="person-row" data-member="${m.id}">
+        <div class="person-info" style="border-left:3px solid ${col}">
+          <div class="person-name">
+            <input type="text" value="${escHtml(m.name)}" 
+              onblur="renameMember('${m.id}',this.value)"
+              onkeydown="if(event.key==='Enter')this.blur()"
+              title="Click to rename" />
+          </div>
+          <div class="person-sub">${m.defaultShift} · ${team}</div>
+          <button class="del-person-btn" onclick="deleteMember('${m.id}')" title="Remove member">✕</button>
+        </div>
+        ${DAYS.map((day,di) => {
+          const shift = (week.schedule[m.id] && week.schedule[m.id][day]) || 'OFF';
+          const s = SHIFT_STYLES[shift] || SHIFT_STYLES.OFF;
+          return `<div class="day-cell${di>=5?' is-weekend':''}" data-member="${m.id}" data-day="${day}">
+            <div class="cell-chip"
+              style="background:${s.bg};color:${s.color};border-color:${s.border};"
+              data-shift="${shift}" data-member="${m.id}" data-day="${day}"
+              onclick="openPicker(event,'${m.id}','${day}')"
+              draggable="true"
+              ondragstart="dragStart(event,'${m.id}','${day}','${shift}')"
+              ondragover="dragOver(event)"
+              ondrop="dragDrop(event,'${m.id}','${day}')"
+              ondragend="dragEnd(event)"
+            >${shift}</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    });
+    // Add member button per team
+    html += `<div class="add-member-row">
+      <div class="add-member-cell">
+        <button class="add-member-btn" onclick="addMember('${team}')">+ Add ${team} member</button>
+      </div>
+    </div>`;
+  });
+
+  body.innerHTML = html;
+}
+
+function updateCounters() {
+  ['India','Morocco','Panama'].forEach(t => {
+    const el = document.getElementById('cnt-'+t.toLowerCase());
+    if (el) el.textContent = state.members.filter(m=>m.team===t).length;
+  });
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────
+// CELL PICKER
+// ─────────────────────────────────────────────
+let pickerTarget = null;
+const picker = document.getElementById('picker');
+
+function openPicker(event, memberId, day) {
+  event.stopPropagation();
+  pickerTarget = { memberId, day };
+  picker.innerHTML = '';
+  SHIFTS.forEach(shift => {
+    const s = SHIFT_STYLES[shift];
+    const opt = document.createElement('div');
+    opt.className = 'picker-option';
+    opt.style.background = s.bg || 'transparent';
+    opt.style.color = s.color;
+    opt.style.borderColor = s.border;
+    opt.style.border = `1px solid ${s.border}`;
+    opt.textContent = shift === 'OFF' ? '— OFF' : shift;
+    opt.onclick = (e) => { e.stopPropagation(); applyShift(memberId, day, shift); closePicker(); };
+    picker.appendChild(opt);
+  });
+  // Position
+  const rect = event.currentTarget.getBoundingClientRect();
+  const pW = 120, pH = SHIFTS.length * 36 + 16;
+  let left = rect.left + window.scrollX;
+  let top  = rect.bottom + window.scrollY + 4;
+  if (left + pW > window.innerWidth) left = window.innerWidth - pW - 8;
+  if (top + pH > window.innerHeight + window.scrollY) top = rect.top + window.scrollY - pH - 4;
+  picker.style.left = left + 'px';
+  picker.style.top  = top + 'px';
+  picker.style.display = 'flex';
+}
+
+function closePicker() {
+  picker.style.display = 'none';
+  pickerTarget = null;
+}
+
+document.addEventListener('click', (e) => {
+  if (!picker.contains(e.target)) closePicker();
+});
+
+function applyShift(memberId, day, shift) {
+  const week = state.weeks.find(w => w.id === state.activeWeek);
+  if (!week) return;
+  if (!week.schedule[memberId]) week.schedule[memberId] = {};
+  week.schedule[memberId][day] = shift;
+  renderGrid();
+  renderCoverage();
+  saveState();
+}
+
+// ─────────────────────────────────────────────
+// DRAG AND DROP (swap shifts between cells)
+// ─────────────────────────────────────────────
+let dragData = null;
+
+function dragStart(event, memberId, day, shift) {
+  dragData = { memberId, day, shift };
+  event.dataTransfer.effectAllowed = 'move';
+  event.currentTarget.classList.add('dragging');
+}
+
+function dragOver(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+  event.currentTarget.classList.add('drag-over');
+}
+
+function dragDrop(event, memberId, day) {
+  event.preventDefault();
+  event.currentTarget.classList.remove('drag-over');
+  if (!dragData) return;
+  const week = state.weeks.find(w => w.id === state.activeWeek);
+  if (!week) return;
+  // Swap shifts
+  const fromShift = dragData.shift;
+  const toShift = (week.schedule[memberId] && week.schedule[memberId][day]) || 'OFF';
+  if (!week.schedule[dragData.memberId]) week.schedule[dragData.memberId] = {};
+  if (!week.schedule[memberId]) week.schedule[memberId] = {};
+  week.schedule[dragData.memberId][dragData.day] = toShift;
+  week.schedule[memberId][day] = fromShift;
+  dragData = null;
+  renderGrid();
+  renderCoverage();
+  saveState();
+}
+
+function dragEnd(event) {
+  event.currentTarget.classList.remove('dragging');
+  dragData = null;
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+}
+
+// ─────────────────────────────────────────────
+// MEMBERS
+// ─────────────────────────────────────────────
+function addMember(team) {
+  const name = prompt(`New ${team} member name:`);
+  if (!name || !name.trim()) return;
+  const id = 'mbr-' + Date.now();
+  const defaultShift = team === 'India' ? 'S1' : team === 'Morocco' ? 'S3' : 'S5';
+  state.members.push({ id, name: name.trim(), team, defaultShift });
+  // Add this member to all weeks with OFF
+  state.weeks.forEach(wk => {
+    wk.schedule[id] = {};
+    DAYS.forEach(d => wk.schedule[id][d] = 'OFF');
+  });
+  render();
+  renderCoverage();
+  saveState();
+}
+
+function deleteMember(memberId) {
+  if (!confirm('Remove this member from the roster?')) return;
+  state.members = state.members.filter(m => m.id !== memberId);
+  state.weeks.forEach(wk => { delete wk.schedule[memberId]; });
+  render();
+  renderCoverage();
+  saveState();
+}
+
+function renameMember(memberId, newName) {
+  const m = state.members.find(m => m.id === memberId);
+  if (m && newName.trim()) { m.name = newName.trim(); saveState(); }
+}
+
+// ─────────────────────────────────────────────
+// WEEKS
+// ─────────────────────────────────────────────
+function openAddWeekModal() {
+  const select = document.getElementById('modal-copy-from');
+  select.innerHTML = '<option value="">Blank (all OFF)</option>';
+  state.weeks.forEach(wk => {
+    const opt = document.createElement('option');
+    opt.value = wk.id; opt.textContent = wk.label;
+    select.appendChild(opt);
+  });
+  document.getElementById('modal-week-label').value = `Week ${String.fromCharCode(65 + state.weeks.length)}`;
+  document.getElementById('modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('modal-week-label').focus(), 50);
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function confirmAddWeek() {
+  const label = document.getElementById('modal-week-label').value.trim();
+  if (!label) { alert('Please enter a week label.'); return; }
+  const copyFrom = document.getElementById('modal-copy-from').value;
+  const id = 'wk-' + Date.now();
+  let schedule;
+  if (copyFrom) {
+    const src = state.weeks.find(w => w.id === copyFrom);
+    schedule = src ? JSON.parse(JSON.stringify(src.schedule)) : makeBlankSchedule(state.members);
+  } else {
+    schedule = makeBlankSchedule(state.members);
+  }
+  // Ensure all current members exist in schedule
+  state.members.forEach(m => {
+    if (!schedule[m.id]) { schedule[m.id] = {}; DAYS.forEach(d => schedule[m.id][d] = 'OFF'); }
+  });
+  state.weeks.push({ id, label, schedule });
+  state.activeWeek = id;
+  closeModal();
+  render();
+  renderCoverage();
+  saveState();
+}
+
+function deleteWeek(weekId, event) {
+  event.stopPropagation();
+  if (state.weeks.length === 1) { alert("Can't delete the last week."); return; }
+  if (!confirm('Delete this week?')) return;
+  state.weeks = state.weeks.filter(w => w.id !== weekId);
+  if (state.activeWeek === weekId) state.activeWeek = state.weeks[0].id;
+  render();
+  renderCoverage();
+  saveState();
+}
+
+// ─────────────────────────────────────────────
+// MODAL keyboard
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('modal-week-label').addEventListener('keydown', e => {
+  if (e.key === 'Enter') confirmAddWeek();
+  if (e.key === 'Escape') closeModal();
+});
+
+
+// ─────────────────────────────────────────────
+// COVERAGE TIMELINE ENGINE
+// ─────────────────────────────────────────────
+const SHIFT_UTC = {
+  S1: { start: 0.5,  end: 9.5,  label: 'S1 India',   color: '#c2410c' },
+  S2: { start: 8.5,  end: 17.5, label: 'S2 India',   color: '#ea580c' },
+  S3: { start: 8.0,  end: 16.0, label: 'S3 Morocco', color: '#059669' },
+  S4: { start: 13.0, end: 22.0, label: 'S4 Morocco', color: '#10b981' },
+  S5: { start: 17.0, end: 25.0, label: 'S5 Panama',  color: '#7c3aed' },
+};
+
+let covMode = 'weekday';
+
+function setCovTab(mode, btn) {
+  covMode = mode;
+  document.querySelectorAll('.cov-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCoverage();
+}
+
+function getActiveShifts() {
+  const week = state.weeks.find(w => w.id === state.activeWeek);
+  if (!week) return {};
+  const days = covMode === 'weekday' ? ['Mon','Tue','Wed','Thu','Fri'] : ['Sat','Sun'];
+  const shiftMembers = {};
+  SHIFTS.filter(s => s !== 'OFF').forEach(s => shiftMembers[s] = new Set());
+  state.members.forEach(m => {
+    const sched = week.schedule[m.id] || {};
+    days.forEach(day => {
+      const sh = sched[day];
+      if (sh && sh !== 'OFF' && shiftMembers[sh]) shiftMembers[sh].add(m.name);
+    });
+  });
+  return shiftMembers;
+}
+
+function computeGaps(activeShifts) {
+  const slots = new Array(96).fill(0);
+  Object.entries(activeShifts).forEach(([shiftId, members]) => {
+    if (!members.size) return;
+    const def = SHIFT_UTC[shiftId];
+    if (!def) return;
+    let s = Math.round(def.start * 4);
+    let e = Math.round(def.end * 4);
+    if (e > 96) {
+      for (let i = s; i < 96; i++) slots[i]++;
+      for (let i = 0; i < e % 96; i++) slots[i]++;
+    } else {
+      for (let i = s; i < e; i++) slots[i]++;
+    }
+  });
+  const gaps = [];
+  let inGap = false, gapStart = 0;
+  for (let i = 0; i <= 96; i++) {
+    const covered = i < 96 ? slots[i] > 0 : false;
+    if (!covered && !inGap) { inGap = true; gapStart = i; }
+    else if (covered && inGap) { gaps.push({ start: gapStart/4, end: i/4 }); inGap = false; }
+  }
+  return { gaps, slots };
+}
+
+function fmtHour(h) {
+  const hh = Math.floor(h) % 24;
+  const mm = Math.round((h - Math.floor(h)) * 60);
+  return String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+}
+
+function renderCoverage() {
+  const week = state.weeks.find(w => w.id === state.activeWeek);
+  const lbl = document.getElementById('cov-week-label');
+  if (lbl && week) lbl.textContent = week.label;
+  const body = document.getElementById('coverage-body');
+  if (!body) return;
+
+  const shiftMembers = getActiveShifts();
+  const { gaps, slots } = computeGaps(shiftMembers);
+  const hasGap = gaps.length > 0;
+  const activeShiftIds = Object.entries(shiftMembers).filter(([,m])=>m.size>0).map(([id])=>id);
+
+  let barsHtml = '';
+  activeShiftIds.forEach(shiftId => {
+    const def = SHIFT_UTC[shiftId];
+    if (!def) return;
+    const members = [...shiftMembers[shiftId]];
+    const wraps = def.end > 24;
+    const pL = (def.start/24)*100;
+    const pE = wraps ? 100 : (def.end/24)*100;
+    const pW = pE - pL;
+    const pWrap = wraps ? ((def.end-24)/24)*100 : 0;
+    barsHtml += `<div class="tl-bar" style="left:${pL.toFixed(2)}%;width:${pW.toFixed(2)}%;background:${def.color};" title="${def.label}: ${members.join(', ')}"><span>${def.label}</span></div>`;
+    if (wraps && pWrap > 0)
+      barsHtml += `<div class="tl-bar" style="left:0%;width:${pWrap.toFixed(2)}%;background:${def.color};opacity:0.7;" title="${def.label} cont."><span></span></div>`;
+  });
+
+  let gapBarsHtml = '';
+  gaps.forEach(g => {
+    const pL = (g.start/24)*100, pW = ((g.end-g.start)/24)*100;
+    gapBarsHtml += `<div class="tl-gap" style="left:${pL.toFixed(2)}%;width:${pW.toFixed(2)}%" title="Gap: ${fmtHour(g.start)} to ${fmtHour(g.end)} UTC"></div>`;
+  });
+
+  const covPct = Math.round((slots.filter(s=>s>0).length/96)*100);
+  const badge = hasGap
+    ? `<span class="tl-gap-badge">⚠ ${gaps.length} gap${gaps.length>1?'s':''} · ${covPct}% covered</span>`
+    : `<span class="tl-ok-badge">✓ Full 24h coverage</span>`;
+
+  const gapDetails = hasGap
+    ? `<div style="margin-top:10px;font-family:'Space Mono',monospace;font-size:10px;color:#f87171;">
+        ${gaps.map(g=>`Gap: ${fmtHour(g.start)} – ${fmtHour(g.end)} UTC (${Math.round((g.end-g.start)*60)} min)`).join(' &nbsp;·&nbsp; ')}
+       </div>` : '';
+
+  const legendHtml = activeShiftIds.map(sid => {
+    const def = SHIFT_UTC[sid]; if (!def) return '';
+    const n = shiftMembers[sid].size;
+    return `<div class="tl-legend-item"><div class="tl-legend-dot" style="background:${def.color}"></div><span>${def.label}</span><span style="color:var(--muted)">· ${n} member${n!==1?'s':''}</span></div>`;
+  }).join('');
+
+  const modeLabel = covMode === 'weekday' ? 'Mon – Fri' : 'Sat – Sun';
+  const hours = [0,2,4,6,8,10,12,14,16,18,20,22,24];
+
+  body.innerHTML = `
+    <div class="tl-row">
+      <div class="tl-row-label"><span>${modeLabel} · UTC 00:00 → 24:00</span>${badge}</div>
+      <div class="tl-track">${gapBarsHtml}${barsHtml}</div>
+      <div class="tl-scale">${hours.map(h=>`<span>${String(h%24).padStart(2,'0')}:00</span>`).join('')}</div>
+      ${gapDetails}
+    </div>
+    <div class="tl-legend">${legendHtml || '<span style="color:var(--muted);font-size:11px;">No shifts assigned.</span>'}</div>
+  `;
+}
+
+// ─────────────────────────────────────────────
+// EXPORT / IMPORT JSON
+// ─────────────────────────────────────────────
+function exportJSON() {
+  const week = state.weeks.find(w => w.id === state.activeWeek);
+  const payload = { exportedAt: new Date().toISOString(), version: 3, ...state };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const slug = week ? week.label.replace(/\s+/g,'-').toLowerCase() : 'roster';
+  a.href = url; a.download = `roster-${slug}-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  const dot = document.getElementById('save-dot');
+  dot.textContent = 'EXPORTED ✓'; dot.className = 'save-dot saved';
+  setTimeout(()=>{ dot.textContent='AUTO-SAVED'; dot.className='save-dot'; }, 2000);
+}
+
+function importJSON(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.members || !data.weeks) { alert('Invalid roster JSON.'); return; }
+      if (!confirm(`Import "${file.name}"?\nThis will replace your current roster.`)) return;
+      state = { members: data.members, weeks: data.weeks, activeWeek: data.activeWeek || data.weeks[0].id };
+      render(); renderCoverage(); saveState();
+      const dot = document.getElementById('save-dot');
+      dot.textContent = 'IMPORTED ✓'; dot.className = 'save-dot saved';
+      setTimeout(()=>{ dot.textContent='AUTO-SAVED'; dot.className='save-dot'; }, 2000);
+    } catch(err) { alert('Failed to parse JSON: ' + err.message); }
+  };
+  reader.readAsText(file); event.target.value = '';
+}
+
+// ─────────────────────────────────────────────
+// INIT
+loadState();
+render();
+renderCoverage();
+</script>
+</body>
+</html>

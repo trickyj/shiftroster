@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>24/7 Support Roster</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090f;
+    --surface: #0f1118;
+    --card: #13161f;
+    --border: #1c2035;
+    --border2: #252a40;
+
+    --india: #f97316;
+    --india-dim: rgba(249,115,22,0.12);
+    --india-border: rgba(249,115,22,0.25);
+
+    --morocco: #10b981;
+    --morocco-dim: rgba(16,185,129,0.1);
+    --morocco-border: rgba(16,185,129,0.25);
+
+    --panama: #a78bfa;
+    --panama-dim: rgba(167,139,250,0.1);
+    --panama-border: rgba(167,139,250,0.25);
+
+    --off: #1a1e2e;
+    --off-text: #2d3555;
+
+    --text: #dde1f0;
+    --muted: #4a5280;
+    --subtle: #6b7399;
+
+    --weekend-bg: rgba(255,255,255,0.025);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+    background-image:
+      radial-gradient(ellipse 600px 400px at 10% 30%, rgba(249,115,22,0.035) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 400px at 90% 70%, rgba(167,139,250,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 300px at 50% 90%, rgba(16,185,129,0.03) 0%, transparent 70%);
+  }
+
+  .page { max-width: 1000px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  header { margin-bottom: 44px; }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  h1 em { color: var(--india); font-style: normal; }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: var(--subtle);
+    font-weight: 500;
+  }
+  .meta-pill span { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text); }
+
+  /* ── SECTION TITLE ── */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    margin-top: 44px;
+  }
+  .section-head h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .section-head::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── SHIFT LEGEND ── */
+  .shifts-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .shift-pill {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    min-width: 160px;
+    position: relative;
+    overflow: hidden;
+  }
+  .shift-pill::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .shift-pill.india::after { background: var(--india); }
+  .shift-pill.morocco::after { background: var(--morocco); }
+  .shift-pill.panama::after { background: var(--panama); }
+
+  .shift-pill-id {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .shift-pill.india .shift-pill-id { color: var(--india); }
+  .shift-pill.morocco .shift-pill-id { color: var(--morocco); }
+  .shift-pill.panama .shift-pill-id { color: var(--panama); }
+
+  .shift-pill-time { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .shift-pill-utc { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); }
+
+  /* ── WEEK TOGGLE ── */
+  .week-toggle {
+    display: flex;
+    gap: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+  .week-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 8px 20px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.2s;
+    font-weight: 700;
+  }
+  .week-btn.active {
+    background: var(--india);
+    color: #fff;
+  }
+  .week-btn:nth-child(2).active {
+    background: var(--panama);
+  }
+
+  /* ── ROSTER GRID ── */
+  .roster-grid {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .grid-header {
+    display: grid;
+    grid-template-columns: 180px repeat(7, 1fr);
+    background: #0b0d16;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gh-cell {
+    padding: 12px 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .gh-cell:first-child { text-align: left; padding-left: 20px; }
+  .gh-cell:last-child { border-right: none; }
+  .gh-cell.weekend { color: var(--india); opacity: 0.7; }
+
+  /* Group row */
+  .group-row {
+    display: grid;
+    grid-template-columns: 180px repeat(7, 1fr);
+    background: #0c0e18;
+    border-top: 1px solid var(--border2);
+    border-bottom: 1px solid var(--border2);
+  }
+  .group-label {
+    padding: 7px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    grid-column: 1 / -1;
+  }
+  .group-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Person row */
+  .person-row {
+    display: grid;
+    grid-template-columns: 180px repeat(7, 1fr);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .person-row:last-child { border-bottom: none; }
+  .person-row:hover { background: rgba(255,255,255,0.015); }
+
+  .person-info {
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .person-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .person-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .day-cell {
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px;
+    position: relative;
+  }
+  .day-cell:last-child { border-right: none; }
+  .day-cell.is-weekend { background: var(--weekend-bg); }
+
+  .cell-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 5px 4px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+
+  .chip-s1 { background: rgba(249,115,22,0.18); color: #fb923c; border: 1px solid rgba(249,115,22,0.25); }
+  .chip-s2 { background: rgba(249,115,22,0.09); color: #fed7aa; border: 1px solid rgba(249,115,22,0.15); }
+  .chip-s3 { background: rgba(16,185,129,0.16); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+  .chip-s4 { background: rgba(16,185,129,0.08); color: #a7f3d0; border: 1px solid rgba(16,185,129,0.15); }
+  .chip-s5 { background: rgba(167,139,250,0.15); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.25); }
+  .chip-off {
+    background: transparent;
+    color: var(--off-text);
+    border: 1px dashed #1e2540;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── COVERAGE STRIP ── */
+  .coverage-section { margin-top: 44px; }
+
+  .timeline-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .tl-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .timeline {
+    position: relative;
+    height: 48px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0b0d16;
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+
+  .shift-bar {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 1px solid rgba(0,0,0,0.2);
+  }
+
+  .time-scale {
+    display: flex;
+    justify-content: space-between;
+  }
+  .time-scale span {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+  }
+
+  /* ── NOTES ── */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 44px;
+  }
+
+  .note-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .note-card-head {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .note-card-head.warn { color: #fbbf24; }
+  .note-card-head.info { color: #60a5fa; }
+  .note-card-head.ok { color: var(--morocco); }
+
+  .note-card p {
+    font-size: 13px;
+    color: var(--subtle);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .note-card p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  footer {
+    margin-top: 48px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 700px) {
+    .grid-header, .group-row, .person-row {
+      grid-template-columns: 120px repeat(7, 1fr);
+    }
+    .person-info { padding: 10px 12px; }
+    .person-name { font-size: 11px; }
+    .cell-chip { font-size: 9px; padding: 4px 2px; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow">Global Support Operations · Biweekly Rotation</div>
+    <h1>24/7 <em>Support</em><br>Roster</h1>
+    <div class="header-meta">
+      <div class="meta-pill">🇮🇳 India <span>4 members</span></div>
+      <div class="meta-pill">🇲🇦 Morocco <span>4 members</span></div>
+      <div class="meta-pill">🇵🇦 Panama <span>1 member</span></div>
+      <div class="meta-pill">Weekend coverage <span>3 people</span></div>
+    </div>
+  </header>
+
+  <!-- SHIFT DEFINITIONS -->
+  <div class="section-head"><h2>Shift Definitions</h2></div>
+  <div class="shifts-row">
+    <div class="shift-pill india">
+      <div class="shift-pill-id">S1 · India</div>
+      <div class="shift-pill-time">06:00 – 15:00 IST</div>
+      <div class="shift-utc">00:30 – 09:30 UTC</div>
+    </div>
+    <div class="shift-pill india">
+      <div class="shift-pill-id">S2 · India</div>
+      <div class="shift-pill-time">14:00 – 23:00 IST</div>
+      <div class="shift-utc">08:30 – 17:30 UTC · Weekdays only</div>
+    </div>
+    <div class="shift-pill morocco">
+      <div class="shift-pill-id">S3 · Morocco</div>
+      <div class="shift-pill-time">09:00 – 17:00 WET</div>
+      <div class="shift-utc">08:00 – 16:00 UTC</div>
+    </div>
+    <div class="shift-pill morocco">
+      <div class="shift-pill-id">S4 · Morocco</div>
+      <div class="shift-pill-time">14:00 – 23:00 WET</div>
+      <div class="shift-utc">13:00 – 22:00 UTC</div>
+    </div>
+    <div class="shift-pill panama">
+      <div class="shift-pill-id">S5 · Panama</div>
+      <div class="shift-pill-time">12:00 – 20:00 EST</div>
+      <div class="shift-utc">17:00 – 01:00 UTC · Weekdays only</div>
+    </div>
+  </div>
+
+  <!-- ROSTER -->
+  <div class="section-head" style="margin-top:44px"><h2>Weekly Roster</h2></div>
+
+  <div class="week-toggle">
+    <button class="week-btn active" onclick="showWeek('a',this)">WEEK A</button>
+    <button class="week-btn" onclick="showWeek('b',this)">WEEK B</button>
+  </div>
+
+  <!-- WEEK A -->
+  <div id="week-a">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:16px;font-family:'Space Mono',monospace;">
+      Week A — P1 · M1 · M3 on weekend duty
+    </div>
+    <div class="roster-grid">
+      <div class="grid-header">
+        <div class="gh-cell">Member</div>
+        <div class="gh-cell">Mon</div>
+        <div class="gh-cell">Tue</div>
+        <div class="gh-cell">Wed</div>
+        <div class="gh-cell">Thu</div>
+        <div class="gh-cell">Fri</div>
+        <div class="gh-cell weekend">Sat</div>
+        <div class="gh-cell weekend">Sun</div>
+      </div>
+
+      <!-- India -->
+      <div class="group-row">
+        <div class="group-label"><span class="group-dot" style="background:var(--india)"></span>India Team · S1 Morning / S2 Evening</div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P1 (Tush) </div>
+          <div class="person-role">S1 · Weekend duty ✦</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s1">S1</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P2 (Bipl)</div>
+          <div class="person-role">S1 · Off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P3 (Sahi)</div>
+          <div class="person-role">S2 · Always off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P4 (Vick)</div>
+          <div class="person-role">S2 · Always off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <!-- Morocco -->
+      <div class="group-row">
+        <div class="group-label"><span class="group-dot" style="background:var(--morocco)"></span>Morocco Team · S3 Morning / S4 Evening</div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M1</div>
+          <div class="person-role">S3 · Weekend duty ✦</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s3">S3</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M2</div>
+          <div class="person-role">S3 · Off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M3</div>
+          <div class="person-role">S4 · Weekend duty ✦</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s4">S4</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M4</div>
+          <div class="person-role">S4 · Off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <!-- Panama -->
+      <div class="group-row">
+        <div class="group-label"><span class="group-dot" style="background:var(--panama)"></span>Panama Team · S5 Evening (Weekdays only)</div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--panama)">
+          <div class="person-name">Panama — PA1</div>
+          <div class="person-role">S5 · Always off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK B -->
+  <div id="week-b" style="display:none">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:16px;font-family:'Space Mono',monospace;">
+      Week B — P2 · M2 · M4 on weekend duty
+    </div>
+    <div class="roster-grid">
+      <div class="grid-header">
+        <div class="gh-cell">Member</div>
+        <div class="gh-cell">Mon</div>
+        <div class="gh-cell">Tue</div>
+        <div class="gh-cell">Wed</div>
+        <div class="gh-cell">Thu</div>
+        <div class="gh-cell">Fri</div>
+        <div class="gh-cell weekend">Sat</div>
+        <div class="gh-cell weekend">Sun</div>
+      </div>
+
+      <!-- India -->
+      <div class="group-row">
+        <div class="group-label"><span class="group-dot" style="background:var(--india)"></span>India Team · S1 Morning / S2 Evening</div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P1 (Tush) </div>
+          <div class="person-role">S1 · Off weekends this week</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P2 (Bipl)</div>
+          <div class="person-role">S1 · Weekend duty ✦</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s1">S1</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s1">S1</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P3 (Sahi)</div>
+          <div class="person-role">S2 · Always off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--india)">
+          <div class="person-name">India — P4 (Vick)</div>
+          <div class="person-role">S2 · Always off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s2">S2</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <!-- Morocco -->
+      <div class="group-row">
+        <div class="group-label"><span class="group-dot" style="background:var(--morocco)"></span>Morocco Team · S3 Morning / S4 Evening</div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M1</div>
+          <div class="person-role">S3 · Off weekends this week</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M2</div>
+          <div class="person-role">S3 · Weekend duty ✦</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s3">S3</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s3">S3</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M3</div>
+          <div class="person-role">S4 · Off weekends this week</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--morocco)">
+          <div class="person-name">Morocco — M4</div>
+          <div class="person-role">S4 · Weekend duty ✦</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s4">S4</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-s4">S4</div></div>
+      </div>
+
+      <!-- Panama -->
+      <div class="group-row">
+        <div class="group-label"><span class="group-dot" style="background:var(--panama)"></span>Panama Team · S5 Evening (Weekdays only)</div>
+      </div>
+
+      <div class="person-row">
+        <div class="person-info" style="border-left:3px solid var(--panama)">
+          <div class="person-name">Panama — PA1</div>
+          <div class="person-role">S5 · Always off weekends</div>
+        </div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell"><div class="cell-chip chip-s5">S5</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+        <div class="day-cell is-weekend"><div class="cell-chip chip-off">OFF</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COVERAGE TIMELINE -->
+  <div class="section-head"><h2>24h UTC Coverage</h2></div>
+  <div class="timeline-wrap">
+    <div class="tl-label">Weekday coverage (all shifts active)</div>
+    <div class="timeline">
+      <div class="shift-bar" style="left:2.1%;width:37.5%;background:#b45309;">S1 India</div>
+      <div class="shift-bar" style="left:35.4%;width:37.5%;background:#d97706;opacity:0.8">S2 India</div>
+      <div class="shift-bar" style="left:33.3%;width:33.3%;background:#047857;opacity:0.9">S3 Morocco</div>
+      <div class="shift-bar" style="left:54.2%;width:37.5%;background:#10b981;opacity:0.8">S4 Morocco</div>
+      <div class="shift-bar" style="left:70.8%;width:25%;background:#6d28d9;">S5 Panama</div>
+      <div class="shift-bar" style="left:0%;width:4.2%;background:#6d28d9;opacity:0.6"></div>
+    </div>
+    <div class="tl-label" style="margin-top:18px">Weekend coverage (S1 + S3 + S4 only)</div>
+    <div class="timeline">
+      <div class="shift-bar" style="left:2.1%;width:37.5%;background:#b45309;">S1 India</div>
+      <div class="shift-bar" style="left:33.3%;width:33.3%;background:#047857;">S3 Morocco</div>
+      <div class="shift-bar" style="left:54.2%;width:37.5%;background:#10b981;opacity:0.8">S4 Morocco</div>
+    </div>
+    <div class="time-scale" style="margin-top:8px">
+      <span>00:00</span><span>03:00</span><span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>24:00</span>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="section-head"><h2>Roster Notes</h2></div>
+  <div class="notes-grid">
+    <div class="note-card">
+      <div class="note-card-head ok">✦ Rotation Logic</div>
+      <p>
+        Weekend duty rotates every week between the two people per shift pair: <strong>P1↔P2 (S1), M1↔M2 (S3), M3↔M4 (S4)</strong>. The person on weekend duty takes <strong>Mon + Tue off</strong> that same week — giving them 2 consecutive comp days.
+      </p>
+    </div>
+    <div class="note-card">
+      <div class="note-card-head info">⚡ S2 & S5 — Weekdays Only</div>
+      <p>
+        <strong>P3, P4</strong> (S2 India) and <strong>PA1</strong> (S5 Panama) never work weekends. They always get Sat + Sun off. This is by design — S2 and S5 are not active on weekends.
+      </p>
+    </div>
+    <div class="note-card">
+      <div class="note-card-head warn">⚠ Weekend Gap: Midnight–00:30 UTC</div>
+      <p>
+        On weekends, S4 ends at <strong>22:00 UTC</strong> and S1 starts at <strong>00:30 UTC</strong>. There's a ~2.5h window with no coverage. Consider an on-call arrangement or extending S4 to cover this if 24/7 weekend coverage is strictly needed.
+      </p>
+    </div>
+    <div class="note-card">
+      <div class="note-card-head warn">⚠ Panama Single Point of Failure</div>
+      <p>
+        <strong>PA1</strong> is the only person covering S5 (17:00–01:00 UTC). On weekdays this works fine, but any leave or absence creates a gap. Consider cross-training <strong>M4</strong> as backup for S5 when PA1 is absent.
+      </p>
+    </div>
+  </div>
+
+  <footer>India IST (UTC+5:30) · Morocco WET (UTC+1) · Panama EST (UTC−5) · Rotation: Week A / Week B alternating</footer>
+</div>
+
+<script>
+  function showWeek(week, btn) {
+    document.getElementById('week-a').style.display = week === 'a' ? 'block' : 'none';
+    document.getElementById('week-b').style.display = week === 'b' ? 'block' : 'none';
+    document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>24/7 Support Roster</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#08090f; --card:#13161f; --card2:#0f1118; --border:#1c2035; --border2:#252a40;
+  --text:#dde1f0; --muted:#4a5280; --subtle:#6b7399;
+  --india:#f97316; --morocco:#10b981; --panama:#a78bfa;
+  --gap-color:#ef4444; --ok-color:#10b981;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;min-height:100vh;
+  background-image:radial-gradient(ellipse 700px 500px at 5% 20%,rgba(249,115,22,.03) 0%,transparent 70%),
+    radial-gradient(ellipse 500px 400px at 95% 80%,rgba(167,139,250,.035) 0%,transparent 70%);}
+.page{max-width:1200px;margin:0 auto;padding:32px 16px 80px;}
+
+/* ── HEADER ── */
+header{margin-bottom:32px;}
+.eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.3em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--muted);}
+h1{font-family:'Space Mono',monospace;font-size:clamp(24px,4vw,42px);font-weight:700;
+  letter-spacing:-.03em;line-height:1.05;margin-bottom:14px;}
+h1 em{color:var(--india);font-style:normal;}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.meta-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.meta-pill{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);
+  border-radius:999px;padding:4px 12px;font-size:11px;color:var(--subtle);}
+.meta-pill span{font-family:'Space Mono',monospace;font-size:10px;color:var(--text);}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+/* ── SAVE DOT ── */
+.save-dot{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;
+  font-size:9px;color:var(--muted);letter-spacing:.1em;}
+.save-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ok-color);animation:pulse 2s infinite;}
+.save-dot.saving::before{background:var(--india);animation:none;}
+.save-dot.saved::before{background:var(--ok-color);animation:none;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;
+  font-size:10px;font-weight:700;letter-spacing:.08em;padding:8px 16px;border-radius:8px;
+  border:none;cursor:pointer;transition:all .18s;white-space:nowrap;}
+.btn-primary{background:var(--india);color:#fff;}
+.btn-primary:hover{background:#ea580c;transform:translateY(-1px);}
+.btn-ghost{background:var(--card);color:var(--text);border:1px solid var(--border2);}
+.btn-ghost:hover{border-color:var(--muted);}
+.btn-teal{background:rgba(16,185,129,.15);color:var(--ok-color);border:1px solid rgba(16,185,129,.3);}
+.btn-teal:hover{background:rgba(16,185,129,.25);}
+.btn-purple{background:rgba(167,139,250,.15);color:var(--panama);border:1px solid rgba(167,139,250,.3);}
+.btn-purple:hover{background:rgba(167,139,250,.25);}
+.btn-sm{padding:5px 11px;font-size:9px;}
+.btn-danger{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.2);}
+.btn-danger:hover{background:rgba(239,68,68,.22);}
+
+/* ── NAV TOOLBAR ── */
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;
+  padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;}
+.toolbar-sep{width:1px;height:24px;background:var(--border2);}
+.view-toggle{display:flex;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px;}
+.vt-btn{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;
+  padding:5px 12px;border-radius:6px;border:none;cursor:pointer;background:transparent;
+  color:var(--muted);transition:all .15s;}
+.vt-btn.active{background:var(--india);color:#fff;}
+.month-nav{display:flex;align-items:center;gap:8px;}
+.month-nav-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);
+  border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;}
+.month-nav-btn:hover{color:var(--text);border-color:var(--muted);}
+.month-label{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;
+  color:var(--text);min-width:140px;text-align:center;}
+.period-jump{font-family:'Space Mono',monospace;font-size:9px;background:var(--card2);
+  border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:5px 8px;outline:none;}
+
+/* ── LEGEND BAR ── */
+.legend-bar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:16px;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;}
+.legend-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-right:2px;white-space:nowrap;}
+.shift-chip{display:inline-flex;align-items:center;justify-content:center;
+  padding:4px 10px;border-radius:5px;font-family:'Space Mono',monospace;
+  font-size:10px;font-weight:700;cursor:default;border:1px solid transparent;user-select:none;}
+.chip-off{background:transparent;color:#2a3050;border:1px dashed rgba(255,255,255,.07);}
+.legend-sep{width:1px;height:18px;background:var(--border);margin:0 3px;}
+.legend-hint{font-size:10px;color:var(--muted);margin-left:auto;}
+
+/* ── ROSTER GRID ── */
+.roster-outer{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.roster-scroll{overflow-x:auto;}
+.roster-inner{min-width:900px;}
+
+/* header row */
+.grid-head{display:flex;background:#0a0c14;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;}
+.gh-name{flex:0 0 160px;padding:10px 16px;font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--border);}
+.day-heads{display:flex;flex:1;}
+.dh-cell{flex:1;min-width:38px;text-align:center;padding:6px 2px;border-right:1px solid var(--border);
+  font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);cursor:default;transition:background .15s;}
+.dh-cell:last-child{border-right:none;}
+.dh-cell.is-weekend{color:var(--india);opacity:.7;}
+.dh-cell.day-ok{background:rgba(16,185,129,.06);}
+.dh-cell.day-gap{background:rgba(239,68,68,.1);}
+.dh-cell.day-today{outline:2px solid rgba(249,115,22,.5);outline-offset:-2px;border-radius:3px;}
+.dh-num{font-size:11px;font-weight:700;line-height:1;}
+.dh-name{font-size:8px;opacity:.6;}
+
+/* group row */
+.group-row{display:flex;background:#0a0c14;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.group-label-cell{flex:1;padding:5px 16px;font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px;}
+.g-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+
+/* person row */
+.person-row{display:flex;border-bottom:1px solid var(--border);transition:background .1s;}
+.person-row:last-child{border-bottom:none;}
+.person-row:hover{background:rgba(255,255,255,.01);}
+.person-info{flex:0 0 160px;padding:8px 16px;display:flex;flex-direction:column;justify-content:center;
+  border-right:1px solid var(--border);border-left:3px solid transparent;position:relative;}
+.person-name-input{background:transparent;border:none;outline:none;color:var(--text);
+  font-family:'Sora',sans-serif;font-size:12px;font-weight:600;width:100%;cursor:text;}
+.person-name-input:focus{background:rgba(255,255,255,.04);border-radius:3px;padding:0 3px;}
+.person-sub{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);margin-top:1px;}
+.del-btn{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:18px;height:18px;
+  border-radius:3px;border:none;background:transparent;color:transparent;cursor:pointer;
+  font-size:11px;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.person-row:hover .del-btn{background:rgba(239,68,68,.15);color:#f87171;}
+
+/* day cells */
+.day-cells{display:flex;flex:1;}
+.day-cell{flex:1;min-width:38px;border-right:1px solid var(--border);display:flex;
+  align-items:center;justify-content:center;padding:4px 2px;}
+.day-cell:last-child{border-right:none;}
+.day-cell.is-weekend{background:rgba(255,255,255,.015);}
+.day-cell.day-gap-col{background:rgba(239,68,68,.05);}
+
+.cell-chip{width:100%;padding:5px 2px;border-radius:5px;font-family:'Space Mono',monospace;
+  font-size:10px;font-weight:700;text-align:center;cursor:pointer;border:1px solid transparent;
+  transition:all .12s;user-select:none;}
+.cell-chip:hover{transform:scale(1.08);filter:brightness(1.15);}
+.cell-chip:active{transform:scale(.95);}
+.cell-chip.dragging{opacity:.35;}
+.cell-chip.drag-over{outline:2px solid var(--india);outline-offset:1px;}
+.chip-empty{background:transparent;color:#1e2540;border:1px dashed #1a1e30;font-size:9px;}
+
+/* coverage status row */
+.cov-status-row{display:flex;background:#090b12;border-top:2px solid var(--border2);}
+.cov-label{flex:0 0 160px;padding:8px 16px;font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--border);
+  display:flex;align-items:center;}
+.cov-cells{display:flex;flex:1;}
+.cov-cell{flex:1;min-width:38px;border-right:1px solid var(--border);display:flex;
+  align-items:center;justify-content:center;padding:5px 2px;position:relative;cursor:default;}
+.cov-cell:last-child{border-right:none;}
+.cov-ok{background:rgba(16,185,129,.08);}
+.cov-gap{background:rgba(239,68,68,.12);}
+.cov-icon{font-size:13px;line-height:1;}
+.cov-cell[data-tooltip]:hover::after{
+  content:attr(data-tooltip);position:absolute;bottom:calc(100% + 6px);left:50%;
+  transform:translateX(-50%);background:#1a1e2e;border:1px solid var(--border2);
+  border-radius:6px;padding:6px 10px;font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--text);white-space:nowrap;z-index:100;max-width:220px;white-space:pre-wrap;text-align:left;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);}
+
+/* add member */
+.add-member-row{display:flex;background:rgba(255,255,255,.005);border-top:1px solid var(--border);}
+.add-member-cell{padding:7px 16px;}
+.add-mbr-btn{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;
+  padding:5px 12px;border-radius:5px;border:1px dashed var(--border2);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .15s;}
+.add-mbr-btn:hover{border-color:var(--india);color:var(--india);}
+
+/* ── 24H TIMELINE PANEL ── */
+.tl-panel{margin-top:28px;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.tl-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;
+  border-bottom:1px solid var(--border);background:#0a0c14;}
+.tl-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.tl-tabs{display:flex;gap:4px;}
+.tl-tab{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:4px 12px;
+  border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;}
+.tl-tab.active{background:rgba(249,115,22,.15);color:var(--india);border-color:var(--india);}
+.tl-body{padding:18px 20px 20px;}
+.tl-track{position:relative;height:38px;border-radius:7px;background:#0a0c14;
+  border:1px solid var(--border);overflow:hidden;margin-bottom:6px;}
+.tl-track::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent calc(100%/24 - 1px),rgba(255,255,255,.025) calc(100%/24 - 1px),rgba(255,255,255,.025) calc(100%/24));
+  pointer-events:none;z-index:2;}
+.tl-bar{position:absolute;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:rgba(255,255,255,.9);
+  overflow:hidden;white-space:nowrap;z-index:1;transition:filter .2s;}
+.tl-bar:hover{filter:brightness(1.2);z-index:3;}
+.tl-gap-bar{position:absolute;height:100%;background:repeating-linear-gradient(135deg,
+  rgba(239,68,68,.18),rgba(239,68,68,.18) 4px,transparent 4px,transparent 10px);
+  border:1px solid rgba(239,68,68,.3);z-index:1;}
+.tl-scale{display:flex;justify-content:space-between;padding:0 1px;}
+.tl-scale span{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);}
+.tl-status{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.tl-ok-badge{font-size:9px;padding:2px 8px;border-radius:4px;
+  background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.25);font-family:'Space Mono',monospace;}
+.tl-gap-badge{font-size:9px;padding:2px 8px;border-radius:4px;
+  background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25);font-family:'Space Mono',monospace;}
+.tl-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;
+  padding-top:12px;border-top:1px solid var(--border);}
+.tl-leg-item{display:flex;align-items:center;gap:5px;font-family:'Space Mono',monospace;font-size:9px;color:var(--subtle);}
+.tl-leg-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+
+/* ── EXPORT BAR ── */
+.export-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:24px;
+  padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:12px;}
+.export-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);flex:1;}
+#import-file-input{display:none;}
+
+/* ── PICKER POPUP ── */
+.picker-popup{position:fixed;z-index:2000;background:#1a1e2e;border:1px solid var(--border2);
+  border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:3px;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);animation:popIn .12s ease;min-width:100px;}
+@keyframes popIn{from{opacity:0;transform:scale(.9) translateY(-4px)}to{opacity:1;transform:scale(1)}}
+.picker-opt{padding:6px 12px;border-radius:5px;cursor:pointer;font-family:'Space Mono',monospace;
+  font-size:10px;font-weight:700;transition:filter .1s;text-align:center;border:1px solid transparent;}
+.picker-opt:hover{filter:brightness(1.2);}
+
+/* ── MODAL ── */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:3000;
+  display:flex;align-items:center;justify-content:center;}
+.modal{background:#13161f;border:1px solid var(--border2);border-radius:14px;padding:26px;
+  width:min(480px,95vw);max-height:90vh;overflow-y:auto;animation:popIn .15s ease;}
+.modal h3{font-family:'Space Mono',monospace;font-size:13px;margin-bottom:18px;letter-spacing:.05em;}
+.modal-field{margin-bottom:13px;}
+.modal-field label{display:block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.modal-field input,.modal-field select{width:100%;background:#0f1118;border:1px solid var(--border2);
+  border-radius:7px;padding:8px 11px;color:var(--text);font-family:'Sora',sans-serif;
+  font-size:12px;outline:none;transition:border .15s;}
+.modal-field input:focus,.modal-field select:focus{border-color:var(--india);}
+.modal-field select option{background:#13161f;}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.modal-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end;}
+
+/* shift manager list */
+.shift-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.shift-item{display:flex;align-items:center;gap:10px;background:#0f1118;
+  border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.shift-swatch{width:28px;height:28px;border-radius:5px;flex-shrink:0;cursor:pointer;border:2px solid rgba(255,255,255,.1);}
+.shift-item-name{flex:1;background:transparent;border:none;outline:none;color:var(--text);
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;}
+.shift-item-time{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap;}
+.shift-del{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:14px;
+  padding:2px 4px;border-radius:3px;transition:all .15s;}
+.shift-del:hover{background:rgba(239,68,68,.15);color:#f87171;}
+.add-shift-form{background:#0f1118;border:1px solid var(--border2);border-radius:10px;padding:14px;}
+.add-shift-form h4{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+
+/* copy modal */
+.month-checkbox-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0;}
+.month-cb{display:flex;align-items:center;gap:7px;background:#0f1118;border:1px solid var(--border);
+  border-radius:7px;padding:8px 10px;cursor:pointer;}
+.month-cb input{accent-color:var(--india);width:14px;height:14px;}
+.month-cb span{font-family:'Space Mono',monospace;font-size:10px;color:var(--text);}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--muted);}
+
+footer{margin-top:36px;text-align:center;font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.1em;padding-top:16px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="eyebrow">Global Support Operations · Smart Roster</div>
+  <h1>24/7 <em>Support</em> Roster</h1>
+  <div class="header-row">
+    <div class="meta-pills">
+      <div class="meta-pill">🇮🇳 <span id="cnt-india">4</span></div>
+      <div class="meta-pill">🇲🇦 <span id="cnt-morocco">4</span></div>
+      <div class="meta-pill">🇵🇦 <span id="cnt-panama">1</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="save-dot" id="save-dot">AUTO-SAVED</div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openShiftManager()">⚙ Shifts</button>
+        <button class="btn btn-purple btn-sm" onclick="openCopyModal()">⧉ Copy Months</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetRoster()">↺ Reset</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="view-toggle">
+    <button class="vt-btn active" id="vt-week" onclick="setView('week',this)">WEEK</button>
+    <button class="vt-btn" id="vt-month" onclick="setView('month',this)">MONTH</button>
+  </div>
+  <div class="toolbar-sep"></div>
+  <div class="month-nav">
+    <button class="month-nav-btn" onclick="navMonth(-1)">‹</button>
+    <span class="month-label" id="month-label">Loading…</span>
+    <button class="month-nav-btn" onclick="navMonth(1)">›</button>
+  </div>
+  <div class="toolbar-sep"></div>
+  <button class="btn btn-ghost btn-sm" onclick="goToday()">Today</button>
+  <input type="month" class="period-jump" id="period-jump" onchange="jumpToMonth(this.value)" title="Jump to month" />
+  <div style="margin-left:auto;display:flex;gap:6px;">
+    <button class="btn btn-teal btn-sm" onclick="exportJSON()">↓ JSON</button>
+    <label class="btn btn-ghost btn-sm" for="import-file-input" style="cursor:pointer;">↑ Import</label>
+    <input type="file" id="import-file-input" accept=".json" onchange="importJSON(event)"/>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend-bar" id="legend-bar"></div>
+
+<!-- ROSTER GRID -->
+<div class="roster-outer">
+  <div class="roster-scroll">
+    <div class="roster-inner" id="roster-inner"></div>
+  </div>
+</div>
+
+<!-- 24H TIMELINE -->
+<div class="tl-panel">
+  <div class="tl-header">
+    <span class="tl-title">24h UTC Coverage · <span id="tl-period-label"></span></span>
+    <div class="tl-tabs">
+      <button class="tl-tab active" onclick="setTlTab('weekday',this)">MON–FRI</button>
+      <button class="tl-tab" onclick="setTlTab('weekend',this)">SAT–SUN</button>
+    </div>
+  </div>
+  <div class="tl-body" id="tl-body"></div>
+</div>
+
+</div><!-- .page -->
+
+<!-- PICKER -->
+<div class="picker-popup" id="picker" style="display:none"></div>
+
+<!-- ADD WEEK MODAL -->
+<div class="modal-backdrop" id="modal-week" style="display:none">
+  <div class="modal">
+    <h3>Add New Month / Period</h3>
+    <div class="modal-field"><label>Label</label>
+      <input id="mw-label" type="text" placeholder="e.g. April 2025" /></div>
+    <div class="modal-field"><label>Start Date</label>
+      <input id="mw-start" type="date" /></div>
+    <div class="modal-field"><label>Copy schedule from</label>
+      <select id="mw-copy"><option value="">Blank (all OFF)</option></select></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeMW()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddPeriod()">Add Period</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHIFT MANAGER MODAL -->
+<div class="modal-backdrop" id="modal-shifts" style="display:none">
+  <div class="modal" style="width:min(560px,95vw)">
+    <h3>⚙ Manage Shifts</h3>
+    <div class="shift-list" id="shift-list"></div>
+    <div class="add-shift-form">
+      <h4>Add New Shift</h4>
+      <div class="modal-row">
+        <div class="modal-field"><label>Shift ID</label>
+          <input id="ns-id" placeholder="e.g. S4-Alpha" maxlength="12"/></div>
+        <div class="modal-field"><label>Display Name</label>
+          <input id="ns-name" placeholder="e.g. S4 Alpha Morocco"/></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field"><label>Start (UTC) e.g. 08:30</label>
+          <input id="ns-start" type="time" step="900"/></div>
+        <div class="modal-field"><label>End (UTC) e.g. 17:30</label>
+          <input id="ns-end" type="time" step="900"/></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field"><label>Color</label>
+          <input id="ns-color" type="color" value="#f97316" style="height:36px;padding:2px;"/></div>
+        <div class="modal-field"><label>Text Color</label>
+          <input id="ns-textcolor" type="color" value="#fed7aa" style="height:36px;padding:2px;"/></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeShiftManager()">Close</button>
+      <button class="btn btn-primary" onclick="addShift()">Add Shift</button>
+    </div>
+  </div>
+</div>
+
+<!-- COPY MONTHS MODAL -->
+<div class="modal-backdrop" id="modal-copy" style="display:none">
+  <div class="modal">
+    <h3>⧉ Copy Months Forward</h3>
+    <p style="font-size:12px;color:var(--subtle);margin-bottom:14px;line-height:1.6;">
+      Select months to copy, then choose how many months ahead to paste them.
+    </p>
+    <div class="modal-field"><label>Select Months to Copy</label>
+      <div class="month-checkbox-grid" id="copy-month-list"></div>
+    </div>
+    <div class="modal-field"><label>Paste N months ahead</label>
+      <input id="copy-offset" type="number" value="3" min="1" max="24" /></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeCopyModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmCopyMonths()">Copy Forward</button>
+    </div>
+  </div>
+</div>
+
+<footer>India IST (UTC+5:30) · Morocco WET (UTC+1) · Panama EST (UTC−5) · All changes auto-saved · v4</footer>
+
+<script>
+// ═══════════════════════════════════════════════
+// CONSTANTS & DEFAULTS
+// ═══════════════════════════════════════════════
+const STORAGE_KEY = 'roster_v4';
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_NAMES = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+const TEAM_COLORS = { India:'#f97316', Morocco:'#10b981', Panama:'#a78bfa' };
+
+const DEFAULT_SHIFTS = [
+  { id:'S1', name:'S1 India',    startUTC:0.5,  endUTC:9.5,  bg:'rgba(249,115,22,.18)',  color:'#fb923c', border:'rgba(249,115,22,.3)',  barColor:'#c2410c' },
+  { id:'S2', name:'S2 India',    startUTC:8.5,  endUTC:17.5, bg:'rgba(253,186,116,.12)', color:'#fdba74', border:'rgba(253,186,116,.2)', barColor:'#ea580c' },
+  { id:'S3', name:'S3 Morocco',  startUTC:8.0,  endUTC:16.0, bg:'rgba(16,185,129,.16)',  color:'#34d399', border:'rgba(16,185,129,.28)', barColor:'#059669' },
+  { id:'S4', name:'S4 Morocco',  startUTC:13.0, endUTC:22.0, bg:'rgba(110,231,183,.1)',  color:'#6ee7b7', border:'rgba(110,231,183,.2)', barColor:'#10b981' },
+  { id:'S5', name:'S5 Panama',   startUTC:17.0, endUTC:25.0, bg:'rgba(167,139,250,.15)', color:'#c4b5fd', border:'rgba(167,139,250,.28)',barColor:'#7c3aed' },
+];
+
+const DEFAULT_MEMBERS = [
+  { id:'p1',  name:'India — P1',   team:'India',   defaultShift:'S1' },
+  { id:'p2',  name:'India — P2',   team:'India',   defaultShift:'S1' },
+  { id:'p3',  name:'India — P3',   team:'India',   defaultShift:'S2' },
+  { id:'p4',  name:'India — P4',   team:'India',   defaultShift:'S2' },
+  { id:'m1',  name:'Morocco — M1', team:'Morocco', defaultShift:'S3' },
+  { id:'m2',  name:'Morocco — M2', team:'Morocco', defaultShift:'S3' },
+  { id:'m3',  name:'Morocco — M3', team:'Morocco', defaultShift:'S4' },
+  { id:'m4',  name:'Morocco — M4', team:'Morocco', defaultShift:'S4' },
+  { id:'pa1', name:'Panama — PA1', team:'Panama',  defaultShift:'S5' },
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let state; // { members, shifts, periods, viewMode, currentDate }
+let tlMode = 'weekday';
+let viewMode = 'week';
+let currentDate; // JS Date, start of displayed period (monday of current week or 1st of month)
+
+function defaultState() {
+  // Build default 3-month periods starting today
+  const today = new Date();
+  const members = JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+  const periods = [];
+
+  // Create Apr, May, Jun or current 3 months
+  for (let m = 0; m < 3; m++) {
+    const d = new Date(today.getFullYear(), today.getMonth() + m, 1);
+    periods.push(makePeriod(d, members, m));
+  }
+
+  return {
+    members,
+    shifts: JSON.parse(JSON.stringify(DEFAULT_SHIFTS)),
+    periods,
+    currentDate: toISO(today),
+  };
+}
+
+function makePeriod(monthStart, members, idx) {
+  const label = MONTH_NAMES[monthStart.getMonth()] + ' ' + monthStart.getFullYear();
+  const id = 'p-' + monthStart.getFullYear() + '-' + String(monthStart.getMonth()+1).padStart(2,'0');
+  const days = getDaysInMonth(monthStart);
+  const schedule = {}; // { memberId: { 'YYYY-MM-DD': shiftId } }
+
+  members.forEach(m => {
+    schedule[m.id] = {};
+    days.forEach(dateStr => {
+      const dow = new Date(dateStr + 'T00:00:00').getDay(); // 0=Sun,6=Sat
+      const isWeekend = (dow === 0 || dow === 6);
+      // Week A/B alternation for weekend rotators
+      const weekNum = getWeekNum(new Date(dateStr + 'T00:00:00'));
+      const isWeekA = weekNum % 2 === 0;
+      const weekendA = ['p1','m1','m3'];
+      const weekendB = ['p2','m2','m4'];
+      const noWeekend = ['p3','p4','pa1'];
+
+      let shift;
+      if (isWeekend) {
+        if (noWeekend.includes(m.id)) { shift = 'OFF'; }
+        else if (weekendA.includes(m.id)) {
+          shift = isWeekA ? m.defaultShift : 'OFF';
+        } else if (weekendB.includes(m.id)) {
+          shift = !isWeekA ? m.defaultShift : 'OFF';
+        } else { shift = 'OFF'; }
+      } else {
+        // Mon: check if this person has weekend duty that week -> Mon+Tue off
+        const weekendDuty = (weekendA.includes(m.id) && isWeekA) || (weekendB.includes(m.id) && !isWeekA);
+        if (weekendDuty && (dow === 1 || dow === 2)) { // Mon or Tue
+          shift = 'OFF';
+        } else {
+          shift = m.defaultShift;
+        }
+      }
+      schedule[m.id][dateStr] = shift;
+    });
+  });
+
+  return { id, label, monthStart: toISO(monthStart), schedule };
+}
+
+function getDaysInMonth(monthStart) {
+  const year = monthStart.getFullYear(), month = monthStart.getMonth();
+  const days = [];
+  const d = new Date(year, month, 1);
+  while (d.getMonth() === month) {
+    days.push(toISO(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return days;
+}
+
+function getWeekNum(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
+
+function toISO(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+
+function parseISO(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
+
+// ═══════════════════════════════════════════════
+// PERSISTENCE
+// ═══════════════════════════════════════════════
+let saveTimer;
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      state = JSON.parse(raw);
+      if (!state.shifts) state.shifts = JSON.parse(JSON.stringify(DEFAULT_SHIFTS));
+    } else state = defaultState();
+  } catch { state = defaultState(); }
+  currentDate = new Date();
+}
+
+function saveState() {
+  const dot = document.getElementById('save-dot');
+  dot.textContent = 'SAVING…'; dot.className = 'save-dot saving';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+    dot.textContent = 'SAVED ✓'; dot.className = 'save-dot saved';
+    setTimeout(() => { dot.textContent = 'AUTO-SAVED'; dot.className = 'save-dot'; }, 1500);
+  }, 300);
+}
+
+function resetRoster() {
+  if (!confirm('Reset entire roster to defaults?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = defaultState();
+  currentDate = new Date();
+  render();
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function setView(mode, btn) {
+  viewMode = mode;
+  document.querySelectorAll('.vt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function navMonth(dir) {
+  if (viewMode === 'week') {
+    currentDate = new Date(currentDate.getTime() + dir * 7 * 86400000);
+  } else {
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + dir, 1);
+  }
+  render();
+}
+
+function goToday() { currentDate = new Date(); render(); }
+
+function jumpToMonth(val) {
+  if (!val) return;
+  const [y,m] = val.split('-').map(Number);
+  currentDate = new Date(y, m-1, 1);
+  viewMode = 'month';
+  document.querySelectorAll('.vt-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('vt-month').classList.add('active');
+  render();
+}
+
+// Get visible date range
+function getVisibleDates() {
+  if (viewMode === 'week') {
+    // Week starting Monday
+    const d = new Date(currentDate);
+    const dow = d.getDay(); // 0=Sun
+    const diff = (dow === 0 ? -6 : 1 - dow);
+    d.setDate(d.getDate() + diff);
+    const dates = [];
+    for (let i = 0; i < 7; i++) {
+      dates.push(toISO(d));
+      d.setDate(d.getDate() + 1);
+    }
+    return dates;
+  } else {
+    return getDaysInMonth(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1));
+  }
+}
+
+function getMonthLabel() {
+  if (viewMode === 'week') {
+    const dates = getVisibleDates();
+    const start = parseISO(dates[0]), end = parseISO(dates[6]);
+    if (start.getMonth() === end.getMonth()) {
+      return MONTH_NAMES[start.getMonth()].slice(0,3) + ' ' + start.getFullYear()
+        + ' · W' + getWeekNum(start);
+    }
+    return MONTH_NAMES[start.getMonth()].slice(0,3) + '–' + MONTH_NAMES[end.getMonth()].slice(0,3) + ' ' + end.getFullYear();
+  }
+  return MONTH_NAMES[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+}
+
+// ═══════════════════════════════════════════════
+// GET SHIFT FOR DATE
+// ═══════════════════════════════════════════════
+function getShift(memberId, dateStr) {
+  // Find period containing this date
+  for (const p of state.periods) {
+    const ps = parseISO(p.monthStart);
+    const days = getDaysInMonth(ps);
+    if (days.includes(dateStr)) {
+      return (p.schedule[memberId] && p.schedule[memberId][dateStr]) || 'OFF';
+    }
+  }
+  return null; // no period
+}
+
+function setShift(memberId, dateStr, shiftId) {
+  for (const p of state.periods) {
+    const ps = parseISO(p.monthStart);
+    const days = getDaysInMonth(ps);
+    if (days.includes(dateStr)) {
+      if (!p.schedule[memberId]) p.schedule[memberId] = {};
+      p.schedule[memberId][dateStr] = shiftId;
+      return;
+    }
+  }
+  // No period — create one
+  const d = parseISO(dateStr.slice(0,8) + '01');
+  const newP = makePeriod(new Date(parseISO(dateStr).getFullYear(), parseISO(dateStr).getMonth(), 1), state.members, 0);
+  newP.schedule[memberId][dateStr] = shiftId;
+  state.periods.push(newP);
+  state.periods.sort((a,b) => a.monthStart.localeCompare(b.monthStart));
+}
+
+function getShiftDef(id) {
+  return state.shifts.find(s => s.id === id) || null;
+}
+
+// ═══════════════════════════════════════════════
+// COVERAGE COMPUTATION
+// ═══════════════════════════════════════════════
+function computeDayCoverage(dateStr) {
+  // Returns { covered: bool, gaps: [{start,end}], activeShifts: [{shiftId, members}] }
+  const slots = new Array(96).fill(0); // quarter-hours
+  const activeShifts = [];
+
+  state.members.forEach(m => {
+    const shiftId = getShift(m.id, dateStr);
+    if (!shiftId || shiftId === 'OFF') return;
+    const def = getShiftDef(shiftId);
+    if (!def) return;
+    let existing = activeShifts.find(a => a.shiftId === shiftId);
+    if (!existing) { existing = { shiftId, members: [] }; activeShifts.push(existing); }
+    existing.members.push(m.name);
+
+    const s = Math.round(def.startUTC * 4);
+    const e = Math.round(def.endUTC * 4);
+    if (e > 96) {
+      for (let i = s; i < 96; i++) slots[i]++;
+      for (let i = 0; i < e % 96; i++) slots[i]++;
+    } else {
+      for (let i = s; i < Math.min(e, 96); i++) slots[i]++;
+    }
+  });
+
+  const gaps = [];
+  let inGap = false, gStart = 0;
+  for (let i = 0; i <= 96; i++) {
+    const cov = i < 96 ? slots[i] > 0 : false;
+    if (!cov && !inGap) { inGap = true; gStart = i; }
+    else if (cov && inGap) { gaps.push({ start: gStart/4, end: i/4 }); inGap = false; }
+  }
+  return { covered: gaps.length === 0, gaps, activeShifts, slots };
+}
+
+function fmtH(h) {
+  const hh = Math.floor(h) % 24, mm = Math.round((h - Math.floor(h)) * 60);
+  return String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+}
+
+// ═══════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════
+function render() {
+  updateMonthLabel();
+  renderLegend();
+  renderGrid();
+  renderTimeline();
+  updateCounters();
+}
+
+function updateMonthLabel() {
+  document.getElementById('month-label').textContent = getMonthLabel();
+  const pi = document.getElementById('period-jump');
+  pi.value = currentDate.getFullYear() + '-' + String(currentDate.getMonth()+1).padStart(2,'0');
+}
+
+function renderLegend() {
+  const bar = document.getElementById('legend-bar');
+  const chips = state.shifts.map(s =>
+    `<span class="shift-chip" style="background:${s.bg};color:${s.color};border-color:${s.border}">${s.id}</span>`
+  ).join('');
+  bar.innerHTML = `<span class="legend-label">Shifts:</span>${chips}
+    <span class="shift-chip chip-off">OFF</span>
+    <div class="legend-sep"></div>
+    <span class="legend-hint">Click cell to change · Drag to swap</span>`;
+}
+
+function renderGrid() {
+  const inner = document.getElementById('roster-inner');
+  const dates = getVisibleDates();
+  const todayStr = toISO(new Date());
+
+  // Pre-compute coverage for each date
+  const covByDate = {};
+  dates.forEach(d => { covByDate[d] = computeDayCoverage(d); });
+
+  // Build day header cells
+  const dayHeadCells = dates.map(d => {
+    const dt = parseISO(d);
+    const dow = dt.getDay();
+    const isWknd = dow === 0 || dow === 6;
+    const cov = covByDate[d];
+    const isToday = d === todayStr;
+    let cls = 'dh-cell';
+    if (isWknd) cls += ' is-weekend';
+    if (cov.covered) cls += ' day-ok'; else cls += ' day-gap';
+    if (isToday) cls += ' day-today';
+    const dowName = DOW[dow];
+    return `<div class="${cls}" title="${d}"><div class="dh-num">${dt.getDate()}</div><div class="dh-name">${dowName}</div></div>`;
+  }).join('');
+
+  // Has period for each date?
+  const hasPeriod = (d) => state.periods.some(p => {
+    return getDaysInMonth(parseISO(p.monthStart)).includes(d);
+  });
+
+  let html = `<div class="grid-head"><div class="gh-name">Member</div><div class="day-heads">${dayHeadCells}</div></div>`;
+
+  const teams = ['India','Morocco','Panama'];
+  teams.forEach(team => {
+    const members = state.members.filter(m => m.team === team);
+    if (!members.length) return;
+    const col = TEAM_COLORS[team];
+    html += `<div class="group-row"><div class="group-label-cell"><span class="g-dot" style="background:${col}"></span>${team} Team</div></div>`;
+
+    members.forEach(m => {
+      const dayCells = dates.map(d => {
+        const shiftId = hasPeriod(d) ? (getShift(m.id, d) || 'OFF') : null;
+        const dt = parseISO(d);
+        const dow = dt.getDay();
+        const isWknd = dow === 0 || dow === 6;
+        const cov = covByDate[d];
+        let cellCls = 'day-cell';
+        if (isWknd) cellCls += ' is-weekend';
+        if (!cov.covered) cellCls += ' day-gap-col';
+
+        let chipHtml;
+        if (shiftId === null) {
+          chipHtml = `<div class="cell-chip chip-empty" data-date="${d}" data-member="${m.id}" onclick="openPicker(event,'${m.id}','${d}')">·</div>`;
+        } else {
+          const def = getShiftDef(shiftId);
+          const bg = def ? def.bg : 'transparent';
+          const color = def ? def.color : '#2a3050';
+          const border = def ? def.border : 'rgba(255,255,255,.06)';
+          const isOff = !def || shiftId === 'OFF';
+          const chipStyle = isOff
+            ? 'background:transparent;color:#1e2540;border:1px dashed #1a1e30;'
+            : `background:${bg};color:${color};border-color:${border};`;
+          chipHtml = `<div class="cell-chip" style="${chipStyle}"
+            data-shift="${shiftId}" data-member="${m.id}" data-date="${d}"
+            onclick="openPicker(event,'${m.id}','${d}')"
+            draggable="true"
+            ondragstart="dragStart(event,'${m.id}','${d}','${shiftId}')"
+            ondragover="dragOver(event)"
+            ondrop="dragDrop(event,'${m.id}','${d}')"
+            ondragend="dragEnd(event)"
+          >${shiftId}</div>`;
+        }
+        return `<div class="${cellCls}">${chipHtml}</div>`;
+      }).join('');
+
+      html += `<div class="person-row">
+        <div class="person-info" style="border-left:3px solid ${col}">
+          <input class="person-name-input" value="${escHtml(m.name)}"
+            onblur="renameMember('${m.id}',this.value)"
+            onkeydown="if(event.key==='Enter')this.blur()" />
+          <div class="person-sub">${m.defaultShift} · ${team}</div>
+          <button class="del-btn" onclick="deleteMember('${m.id}')" title="Remove">✕</button>
+        </div>
+        <div class="day-cells">${dayCells}</div>
+      </div>`;
+    });
+
+    // Coverage status row
+    const covCells = dates.map(d => {
+      const cov = covByDate[d];
+      const hasPer = hasPeriod(d);
+      if (!hasPer) return `<div class="cov-cell" style="color:var(--muted);font-size:9px;font-family:'Space Mono',monospace;">–</div>`;
+      if (cov.covered) {
+        return `<div class="cov-cell cov-ok" data-tooltip="✓ Full 24h coverage"><span class="cov-icon">✓</span></div>`;
+      } else {
+        const gapText = cov.gaps.map(g => `${fmtH(g.start)}–${fmtH(g.end)} UTC`).join('\n');
+        const tooltip = `⚠ Gap${cov.gaps.length>1?'s':''}:\n${gapText}`;
+        return `<div class="cov-cell cov-gap" data-tooltip="${escHtml(tooltip)}"><span class="cov-icon">⚠</span></div>`;
+      }
+    }).join('');
+
+    html += `<div class="cov-status-row">
+      <div class="cov-label">24h Cover</div>
+      <div class="cov-cells">${covCells}</div>
+    </div>`;
+
+    html += `<div class="add-member-row"><div class="add-member-cell">
+      <button class="add-mbr-btn" onclick="addMember('${team}')">+ Add ${team} member</button>
+    </div></div>`;
+  });
+
+  inner.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// TIMELINE (bottom panel)
+// ═══════════════════════════════════════════════
+function setTlTab(mode, btn) {
+  tlMode = mode;
+  document.querySelectorAll('.tl-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTimeline();
+}
+
+function renderTimeline() {
+  const lbl = document.getElementById('tl-period-label');
+  if (lbl) lbl.textContent = getMonthLabel();
+
+  const dates = getVisibleDates();
+  const filterDates = dates.filter(d => {
+    const dow = parseISO(d).getDay();
+    return tlMode === 'weekday' ? (dow >= 1 && dow <= 5) : (dow === 0 || dow === 6);
+  });
+
+  // Aggregate coverage across filtered dates
+  const aggSlots = new Array(96).fill(0);
+  const shiftMemberMap = {};
+  state.shifts.forEach(s => shiftMemberMap[s.id] = new Set());
+
+  filterDates.forEach(d => {
+    state.members.forEach(m => {
+      const shiftId = getShift(m.id, d);
+      if (!shiftId || shiftId === 'OFF') return;
+      const def = getShiftDef(shiftId);
+      if (!def) return;
+      if (shiftMemberMap[shiftId]) shiftMemberMap[shiftId].add(m.name);
+      const s = Math.round(def.startUTC * 4);
+      const e = Math.round(def.endUTC * 4);
+      if (e > 96) {
+        for (let i = s; i < 96; i++) aggSlots[i]++;
+        for (let i = 0; i < e % 96; i++) aggSlots[i]++;
+      } else {
+        for (let i = s; i < Math.min(e, 96); i++) aggSlots[i]++;
+      }
+    });
+  });
+
+  // Gaps
+  const gaps = []; let inGap = false, gS = 0;
+  for (let i = 0; i <= 96; i++) {
+    const c = i < 96 ? aggSlots[i] > 0 : false;
+    if (!c && !inGap) { inGap = true; gS = i; }
+    else if (c && inGap) { gaps.push({start:gS/4,end:i/4}); inGap = false; }
+  }
+
+  const activeShifts = state.shifts.filter(s => shiftMemberMap[s.id] && shiftMemberMap[s.id].size > 0);
+  let barsHtml = '';
+  activeShifts.forEach(def => {
+    const wraps = def.endUTC > 24;
+    const pL = (def.startUTC/24)*100;
+    const pE = wraps ? 100 : (def.endUTC/24)*100;
+    const pW = pE - pL;
+    const pWrap = wraps ? ((def.endUTC-24)/24)*100 : 0;
+    const members = [...shiftMemberMap[def.id]];
+    barsHtml += `<div class="tl-bar" style="left:${pL.toFixed(1)}%;width:${pW.toFixed(1)}%;background:${def.barColor||def.bg};" title="${def.name}: ${members.join(', ')}"><span style="padding:0 4px">${def.id}</span></div>`;
+    if (wraps && pWrap > 0)
+      barsHtml += `<div class="tl-bar" style="left:0%;width:${pWrap.toFixed(1)}%;background:${def.barColor||def.bg};opacity:.65;"></div>`;
+  });
+
+  let gapBarsHtml = '';
+  gaps.forEach(g => {
+    const pL=(g.start/24)*100, pW=((g.end-g.start)/24)*100;
+    gapBarsHtml += `<div class="tl-gap-bar" style="left:${pL.toFixed(1)}%;width:${pW.toFixed(1)}%" title="Gap: ${fmtH(g.start)}–${fmtH(g.end)} UTC"></div>`;
+  });
+
+  const hasGap = gaps.length > 0;
+  const covPct = Math.round((aggSlots.filter(s=>s>0).length/96)*100);
+  const badge = hasGap
+    ? `<span class="tl-gap-badge">⚠ ${gaps.length} gap${gaps.length>1?'s':''} · ${covPct}% covered</span>
+       <span style="font-family:'Space Mono',monospace;font-size:9px;color:#f87171;">${gaps.map(g=>`${fmtH(g.start)}–${fmtH(g.end)} UTC`).join('  ·  ')}</span>`
+    : `<span class="tl-ok-badge">✓ Full 24h coverage</span>`;
+
+  const legendHtml = activeShifts.map(s =>
+    `<div class="tl-leg-item"><div class="tl-leg-dot" style="background:${s.barColor||s.bg}"></div><span>${s.name}</span><span style="color:var(--muted)">· ${shiftMemberMap[s.id].size}</span></div>`
+  ).join('');
+
+  const modeLabel = tlMode === 'weekday' ? 'Mon–Fri' : 'Sat–Sun';
+  const hours = [0,3,6,9,12,15,18,21,24];
+
+  const body = document.getElementById('tl-body');
+  if (!body) return;
+  body.innerHTML = `
+    <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:8px;letter-spacing:.15em;text-transform:uppercase;">${modeLabel} · UTC 00:00 → 24:00${filterDates.length===0?' (no dates in view)':''}</div>
+    <div class="tl-track">${gapBarsHtml}${barsHtml}</div>
+    <div class="tl-scale">${hours.map(h=>`<span>${String(h%24).padStart(2,'0')}:00</span>`).join('')}</div>
+    <div class="tl-status">${badge}</div>
+    <div class="tl-legend">${legendHtml||'<span style="color:var(--muted);font-size:9px;">No shifts in this period.</span>'}</div>
+  `;
+}
+
+// ═══════════════════════════════════════════════
+// PICKER
+// ═══════════════════════════════════════════════
+const picker = document.getElementById('picker');
+function openPicker(event, memberId, dateStr) {
+  event.stopPropagation();
+  picker.innerHTML = '';
+  const allOptions = [...state.shifts, { id:'OFF', name:'— OFF', bg:'transparent', color:'#3a4060', border:'rgba(255,255,255,.08)' }];
+  allOptions.forEach(s => {
+    const opt = document.createElement('div');
+    opt.className = 'picker-opt';
+    opt.style.background = s.bg;
+    opt.style.color = s.color;
+    opt.style.border = `1px solid ${s.border}`;
+    opt.textContent = s.id === 'OFF' ? '— OFF' : `${s.id}`;
+    opt.title = s.name || s.id;
+    opt.onclick = e => { e.stopPropagation(); applyShift(memberId, dateStr, s.id); closePicker(); };
+    picker.appendChild(opt);
+  });
+  const rect = event.currentTarget.getBoundingClientRect();
+  const pW = 120, pH = allOptions.length * 34 + 14;
+  let left = rect.left + window.scrollX, top = rect.bottom + window.scrollY + 4;
+  if (left + pW > window.innerWidth) left = window.innerWidth - pW - 8;
+  if (top + pH > window.innerHeight + window.scrollY) top = rect.top + window.scrollY - pH - 4;
+  picker.style.left = left + 'px'; picker.style.top = top + 'px';
+  picker.style.display = 'flex';
+}
+function closePicker() { picker.style.display = 'none'; }
+document.addEventListener('click', e => { if (!picker.contains(e.target)) closePicker(); });
+
+function applyShift(memberId, dateStr, shiftId) {
+  setShift(memberId, dateStr, shiftId);
+  render();
+  saveState();
+}
+
+// ═══════════════════════════════════════════════
+// DRAG & DROP
+// ═══════════════════════════════════════════════
+let dragData = null;
+function dragStart(e, mId, d, sh) {
+  dragData = {mId, d, sh};
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.classList.add('dragging');
+}
+function dragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function dragDrop(e, mId, d) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragData) return;
+  const toSh = getShift(mId, d) || 'OFF';
+  setShift(dragData.mId, dragData.d, toSh);
+  setShift(mId, d, dragData.sh);
+  dragData = null;
+  render(); saveState();
+}
+function dragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  dragData = null;
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+}
+
+// ═══════════════════════════════════════════════
+// MEMBERS
+// ═══════════════════════════════════════════════
+function addMember(team) {
+  const name = prompt(`New ${team} member name:`);
+  if (!name || !name.trim()) return;
+  const id = 'mbr-' + Date.now();
+  const defaultShift = team === 'India' ? 'S1' : team === 'Morocco' ? 'S3' : 'S5';
+  state.members.push({ id, name: name.trim(), team, defaultShift });
+  state.periods.forEach(p => {
+    p.schedule[id] = {};
+    getDaysInMonth(parseISO(p.monthStart)).forEach(d => p.schedule[id][d] = 'OFF');
+  });
+  render(); saveState();
+}
+function deleteMember(id) {
+  if (!confirm('Remove this member?')) return;
+  state.members = state.members.filter(m => m.id !== id);
+  state.periods.forEach(p => delete p.schedule[id]);
+  render(); saveState();
+}
+function renameMember(id, name) {
+  const m = state.members.find(m => m.id === id);
+  if (m && name.trim()) { m.name = name.trim(); saveState(); }
+}
+function updateCounters() {
+  ['India','Morocco','Panama'].forEach(t => {
+    const el = document.getElementById('cnt-'+t.toLowerCase());
+    if (el) el.textContent = state.members.filter(m => m.team === t).length;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// SHIFT MANAGER
+// ═══════════════════════════════════════════════
+function openShiftManager() {
+  renderShiftList();
+  document.getElementById('modal-shifts').style.display = 'flex';
+}
+function closeShiftManager() {
+  document.getElementById('modal-shifts').style.display = 'none';
+  render(); saveState();
+}
+function renderShiftList() {
+  const list = document.getElementById('shift-list');
+  list.innerHTML = state.shifts.map((s,i) => `
+    <div class="shift-item">
+      <div class="shift-swatch" style="background:${s.barColor||s.bg}" title="Bar color"></div>
+      <input class="shift-item-name" value="${escHtml(s.id)}" style="max-width:80px;color:${s.color}"
+        onchange="updateShiftField(${i},'id',this.value)" />
+      <input class="shift-item-name" value="${escHtml(s.name)}" style="flex:1;font-weight:400;"
+        onchange="updateShiftField(${i},'name',this.value)" />
+      <span class="shift-item-time">${fmtH(s.startUTC)}–${fmtH(s.endUTC%24===0&&s.endUTC!==0?24:s.endUTC)} UTC</span>
+      <input type="time" style="background:#0f1118;border:1px solid var(--border2);border-radius:5px;color:var(--text);padding:3px 6px;font-size:10px;font-family:'Space Mono',monospace;"
+        value="${fmtH(s.startUTC)}" onchange="updateShiftField(${i},'startUTC',timeToH(this.value))" />
+      <input type="time" style="background:#0f1118;border:1px solid var(--border2);border-radius:5px;color:var(--text);padding:3px 6px;font-size:10px;font-family:'Space Mono',monospace;"
+        value="${fmtH(s.endUTC > 24 ? s.endUTC - 24 : s.endUTC)}" onchange="updateShiftField(${i},'endUTC',timeToEndH(this.value,${s.startUTC}))" />
+      <button class="shift-del" onclick="deleteShift(${i})" title="Delete shift">✕</button>
+    </div>
+  `).join('');
+}
+function timeToH(val) {
+  if (!val) return 0;
+  const [h,m] = val.split(':').map(Number);
+  return h + m/60;
+}
+function timeToEndH(val, startH) {
+  let h = timeToH(val);
+  if (h <= startH) h += 24; // wraps midnight
+  return h;
+}
+function updateShiftField(idx, field, val) {
+  state.shifts[idx][field] = val;
+  renderShiftList();
+}
+function deleteShift(idx) {
+  const s = state.shifts[idx];
+  if (!confirm(`Delete shift "${s.id}"? It will appear as OFF wherever used.`)) return;
+  state.shifts.splice(idx, 1);
+  renderShiftList();
+}
+function addShift() {
+  const id = document.getElementById('ns-id').value.trim();
+  const name = document.getElementById('ns-name').value.trim();
+  const startV = document.getElementById('ns-start').value;
+  const endV = document.getElementById('ns-end').value;
+  const color = document.getElementById('ns-color').value;
+  const textColor = document.getElementById('ns-textcolor').value;
+  if (!id || !startV || !endV) { alert('Please fill in Shift ID, start and end times.'); return; }
+  if (state.shifts.find(s => s.id === id)) { alert('Shift ID already exists.'); return; }
+  const startUTC = timeToH(startV);
+  let endUTC = timeToH(endV);
+  if (endUTC <= startUTC) endUTC += 24;
+  state.shifts.push({
+    id, name: name || id,
+    startUTC, endUTC,
+    bg: color + '30',
+    color: textColor,
+    border: color + '60',
+    barColor: color,
+  });
+  document.getElementById('ns-id').value = '';
+  document.getElementById('ns-name').value = '';
+  renderShiftList();
+}
+
+// ═══════════════════════════════════════════════
+// ADD PERIOD MODAL
+// ═══════════════════════════════════════════════
+function closeMW() { document.getElementById('modal-week').style.display = 'none'; }
+function openAddPeriodModal() {
+  const sel = document.getElementById('mw-copy');
+  sel.innerHTML = '<option value="">Blank (all OFF)</option>';
+  state.periods.forEach(p => { const o = document.createElement('option'); o.value = p.id; o.textContent = p.label; sel.appendChild(o); });
+  document.getElementById('mw-label').value = '';
+  document.getElementById('mw-start').value = toISO(new Date()).slice(0,8) + '01';
+  document.getElementById('modal-week').style.display = 'flex';
+}
+function confirmAddPeriod() {
+  const label = document.getElementById('mw-label').value.trim();
+  const startStr = document.getElementById('mw-start').value;
+  const copyFrom = document.getElementById('mw-copy').value;
+  if (!label || !startStr) { alert('Fill in label and start date.'); return; }
+  const startD = parseISO(startStr.slice(0,8) + '01');
+  const id = 'p-' + toISO(startD).slice(0,7);
+  if (state.periods.find(p => p.id === id)) { alert('Period for this month already exists.'); return; }
+
+  let schedule = {};
+  if (copyFrom) {
+    const src = state.periods.find(p => p.id === copyFrom);
+    if (src) {
+      // Map day-of-month to shift from source month
+      const srcDays = getDaysInMonth(parseISO(src.monthStart));
+      const newDays = getDaysInMonth(startD);
+      state.members.forEach(m => {
+        schedule[m.id] = {};
+        newDays.forEach((nd, i) => {
+          const srcD = srcDays[Math.min(i, srcDays.length-1)];
+          schedule[m.id][nd] = (src.schedule[m.id] && src.schedule[m.id][srcD]) || 'OFF';
+        });
+      });
+    }
+  } else {
+    const newDays = getDaysInMonth(startD);
+    state.members.forEach(m => { schedule[m.id] = {}; newDays.forEach(d => schedule[m.id][d] = 'OFF'); });
+  }
+
+  state.periods.push({ id, label, monthStart: toISO(startD), schedule });
+  state.periods.sort((a,b) => a.monthStart.localeCompare(b.monthStart));
+  closeMW();
+  render(); saveState();
+}
+
+// ═══════════════════════════════════════════════
+// COPY MONTHS MODAL
+// ═══════════════════════════════════════════════
+function openCopyModal() {
+  const grid = document.getElementById('copy-month-list');
+  grid.innerHTML = state.periods.map(p => `
+    <label class="month-cb">
+      <input type="checkbox" value="${p.id}" />
+      <span>${p.label}</span>
+    </label>`).join('');
+  document.getElementById('modal-copy').style.display = 'flex';
+}
+function closeCopyModal() { document.getElementById('modal-copy').style.display = 'none'; }
+function confirmCopyMonths() {
+  const checked = [...document.querySelectorAll('#copy-month-list input:checked')].map(el => el.value);
+  const offset = parseInt(document.getElementById('copy-offset').value) || 3;
+  if (!checked.length) { alert('Select at least one month.'); return; }
+
+  checked.forEach(pid => {
+    const src = state.periods.find(p => p.id === pid);
+    if (!src) return;
+    const srcStart = parseISO(src.monthStart);
+    const newStart = new Date(srcStart.getFullYear(), srcStart.getMonth() + offset, 1);
+    const newId = 'p-' + toISO(newStart).slice(0,7);
+    if (state.periods.find(p => p.id === newId)) return; // already exists, skip
+
+    const newLabel = MONTH_NAMES[newStart.getMonth()] + ' ' + newStart.getFullYear();
+    const srcDays = getDaysInMonth(srcStart);
+    const newDays = getDaysInMonth(newStart);
+    const schedule = {};
+    state.members.forEach(m => {
+      schedule[m.id] = {};
+      newDays.forEach((nd, i) => {
+        const srcD = srcDays[Math.min(i, srcDays.length-1)];
+        schedule[m.id][nd] = (src.schedule[m.id] && src.schedule[m.id][srcD]) || 'OFF';
+      });
+    });
+    state.periods.push({ id: newId, label: newLabel, monthStart: toISO(newStart), schedule });
+  });
+
+  state.periods.sort((a,b) => a.monthStart.localeCompare(b.monthStart));
+  closeCopyModal();
+  // Navigate to new months
+  const firstCopied = state.periods.find(p => checked.some(pid => {
+    const src = state.periods.find(pp => pp.id === pid);
+    if (!src) return false;
+    const ns = parseISO(src.monthStart);
+    const newS = new Date(ns.getFullYear(), ns.getMonth() + offset, 1);
+    return p.id === 'p-' + toISO(newS).slice(0,7);
+  }));
+  if (firstCopied) { currentDate = parseISO(firstCopied.monthStart); viewMode = 'month'; }
+  render(); saveState();
+  alert(`✓ Copied ${checked.length} month${checked.length>1?'s':''} forward by ${offset} months!`);
+}
+
+// ═══════════════════════════════════════════════
+// EXPORT / IMPORT
+// ═══════════════════════════════════════════════
+function exportJSON() {
+  const payload = { exportedAt: new Date().toISOString(), version: 4, ...state };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `roster-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  const dot = document.getElementById('save-dot');
+  dot.textContent = 'EXPORTED ✓'; dot.className = 'save-dot saved';
+  setTimeout(() => { dot.textContent = 'AUTO-SAVED'; dot.className = 'save-dot'; }, 2000);
+}
+function importJSON(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.members || !data.periods) { alert('Invalid roster JSON.'); return; }
+      if (!confirm(`Import "${file.name}"? This replaces your current roster.`)) return;
+      state = { members: data.members, shifts: data.shifts || JSON.parse(JSON.stringify(DEFAULT_SHIFTS)), periods: data.periods };
+      currentDate = new Date();
+      render(); saveState();
+      const dot = document.getElementById('save-dot');
+      dot.textContent = 'IMPORTED ✓'; dot.className = 'save-dot saved';
+      setTimeout(() => { dot.textContent = 'AUTO-SAVED'; dot.className = 'save-dot'; }, 2000);
+    } catch(err) { alert('Parse error: ' + err.message); }
+  };
+  reader.readAsText(file); event.target.value = '';
+}
+
+// ═══════════════════════════════════════════════
+// MODAL CLOSE ON BACKDROP CLICK
+// ═══════════════════════════════════════════════
+['modal-week','modal-shifts','modal-copy'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+});
+
+// ═══════════════════════════════════════════════
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+loadState();
+render();
+</script>
+</body>
+</html>

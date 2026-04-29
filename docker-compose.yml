@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  shift-roster:
+    build: .
+    container_name: shift-roster-app
+    ports:
+      - "8080:80"
+    environment:
+      - TZ=UTC
+    restart: unless-stopped
+    volumes:
+      - ./V5_roster_dynamic.html:/usr/share/nginx/html/V5_roster_dynamic.html:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
